@@ -3,173 +3,350 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PANGKI 發文企劃 — 나를 위한 로맨틱한 시간</title>
+  <title>PANGKI 깐달걀기초 — 나를 위한 로맨틱한 시간</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Serif+TC:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap');
 
     :root {
-      --cream: #fff5f8;
-      --blush: #f7c5d5;
-      --dusty-rose: #e8829a;
-      --deep: #3a2030;
-      --mid: #8a4f6a;
-      --light: #fde8ef;
-      --accent: #d95f82;
-      --warning: #c0392b;
+      --cream: #fdf8f5;
+      --blush: #f0c4d2;
+      --dusty-rose: #c87a96;
+      --deep: #2a1820;
+      --mid: #7a4560;
+      --light: #faedf2;
+      --accent: #c05070;
+      --warning: #a82a1a;
       --warning-bg: #fff0ee;
-      --green: #27ae60;
-      --green-bg: #f0fff4;
+      --green: #2a7048;
+      --green-bg: #f0faf4;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background-color: var(--cream);
+      background: var(--cream);
       color: var(--deep);
       font-family: 'Noto Sans TC', sans-serif;
       font-weight: 300;
       line-height: 1.8;
+      min-height: 100vh;
     }
 
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(160deg, #3a1a2e 0%, #a04070 60%, #f7c5d5 100%);
-      color: white;
-      padding: 80px 40px 70px;
-      text-align: center;
+    /* ── VIEWS ── */
+    .view { display: none; }
+    .view.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* ══════════════ HOME ══════════════ */
+
+    .home-hero {
       position: relative;
+      height: 72vh;
+      min-height: 420px;
       overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      background: rgba(232,196,184,0.12);
+    .home-hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
     }
-    .hero::after {
-      content: '';
+    .home-hero-overlay {
       position: absolute;
-      bottom: -80px; left: -40px;
-      width: 220px; height: 220px;
-      border-radius: 50%;
-      background: rgba(232,196,184,0.08);
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px;
+      background: linear-gradient(160deg, rgba(42,24,32,0.35) 0%, rgba(42,24,32,0.65) 100%);
     }
-    .hero-badge {
+    .hero-eyebrow {
       display: inline-block;
-      border: 1px solid rgba(232,196,184,0.5);
+      border: 1px solid rgba(240,196,210,0.5);
       color: var(--blush);
-      font-size: 11px;
-      letter-spacing: 3px;
+      font-size: 10px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      padding: 6px 18px;
+      padding: 6px 20px;
       border-radius: 20px;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
     }
-    .hero h1 {
-      font-family: 'Noto Serif TC', serif;
-      font-size: clamp(28px, 5vw, 48px);
+    .home-hero-overlay h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 9vw, 76px);
       font-weight: 300;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+      color: white;
+      letter-spacing: 6px;
+      line-height: 1.15;
+      margin-bottom: 6px;
     }
-    .hero h1 span { color: var(--blush); }
+    .home-hero-overlay h1 em {
+      font-style: italic;
+      color: #f5d0dc;
+      display: block;
+      font-size: 0.72em;
+      letter-spacing: 4px;
+    }
     .hero-kr {
-      font-size: 13px;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 2px;
-      margin-bottom: 32px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.42);
+      letter-spacing: 3px;
+      margin: 14px 0 20px;
     }
     .hero-tagline {
-      max-width: 520px;
-      margin: 0 auto;
-      font-size: 15px;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.9;
+      font-size: 14px;
+      color: rgba(255,255,255,0.78);
+      line-height: 2.1;
+      max-width: 440px;
     }
 
-    /* ── CONTAINER ── */
-    .container {
+    /* HOME BODY */
+    .home-body {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 52px 0 36px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--blush), transparent);
+      opacity: 0.5;
+    }
+    .section-divider span {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      white-space: nowrap;
+    }
+    .intro-text {
+      font-size: 15px;
+      color: var(--mid);
+      line-height: 2.2;
+      text-align: center;
+    }
+    .intro-text strong { color: var(--deep); font-weight: 500; }
+    .intro-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 4vw, 24px);
+      font-style: italic;
+      color: var(--dusty-rose);
+      text-align: center;
+      line-height: 1.7;
+      margin: 32px 0;
+      padding: 28px 24px;
+      border-top: 1px solid rgba(240,196,210,0.4);
+      border-bottom: 1px solid rgba(240,196,210,0.4);
+    }
+
+    /* NAV BUTTONS */
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .nav-btn {
+      position: relative;
+      border: none;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 3/2;
+      display: block;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      text-decoration: none;
+      background: #2a1820;
+    }
+    .nav-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(42,24,32,0.22);
+    }
+    .nav-btn img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      transition: opacity 0.3s ease, transform 0.4s ease;
+    }
+    .nav-btn:hover img {
+      opacity: 0.45;
+      transform: scale(1.04);
+    }
+    .nav-btn-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+    }
+    .nav-btn-sub {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .nav-btn-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(13px, 2.6vw, 17px);
+      font-weight: 400;
+      color: white;
+      letter-spacing: 1px;
+      line-height: 1.55;
+    }
+    .nav-btn-arrow {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 12px;
+      letter-spacing: 2px;
+    }
+
+    /* ══════════════ SECTION VIEWS ══════════════ */
+
+    .section-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253,248,245,0.93);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(240,196,210,0.35);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .back-btn {
+      background: none;
+      border: 1px solid var(--blush);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: var(--mid);
+      cursor: pointer;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-weight: 300;
+      letter-spacing: 1px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .back-btn:hover {
+      background: var(--light);
+      border-color: var(--dusty-rose);
+      color: var(--accent);
+    }
+    .section-topbar-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 14px;
+      color: var(--mid);
+      letter-spacing: 1px;
+    }
+
+    .section-body {
       max-width: 760px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 36px 24px 80px;
     }
 
-    /* ── SECTION TITLE ── */
+    /* SECTION BANNER */
+    .section-banner {
+      position: relative;
+      height: 210px;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 24px rgba(42,24,32,0.12);
+    }
+    .section-banner img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.62) saturate(0.75);
+    }
+    .section-banner-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .section-banner-text h2 {
+      font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 400;
+      color: white;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .section-banner-text p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.52);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── SHARED ELEMENTS ── */
+
     .section-label {
       display: flex;
       align-items: center;
       gap: 14px;
-      margin: 56px 0 28px;
+      margin: 44px 0 22px;
     }
-    .section-label::before,
-    .section-label::after {
+    .section-label::before, .section-label::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--blush);
+      background: linear-gradient(to right, transparent, var(--blush), transparent);
       opacity: 0.4;
     }
     .section-label span {
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--dusty-rose);
       white-space: nowrap;
     }
 
-    /* ── INTRO BLOCK ── */
     .intro-block {
       background: white;
       border-left: 3px solid var(--dusty-rose);
-      padding: 24px 28px;
-      border-radius: 0 12px 12px 0;
-      margin-bottom: 12px;
+      padding: 22px 26px;
+      border-radius: 0 14px 14px 0;
+      margin-bottom: 16px;
       font-size: 15px;
       color: var(--mid);
-      line-height: 2;
+      line-height: 2.1;
     }
-    .intro-block strong {
-      color: var(--deep);
-      font-weight: 500;
-    }
+    .intro-block strong { color: var(--deep); font-weight: 500; }
 
-    /* ── STATUS BAR ── */
     .status-bar {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin: 20px 0 48px;
-    }
-    .back-to-top {
-      display: block;
-      text-align: center;
-      margin: 8px 0 32px;
-      color: var(--mid);
-      font-size: 12px;
-      text-decoration: none;
-      letter-spacing: 1px;
-      opacity: 0.6;
-    }
-    .back-to-top:hover { opacity: 1; }
-
-    a.status-pill {
-      text-decoration: none;
-      cursor: pointer;
-    }
-    a.status-pill:hover {
-      opacity: 0.8;
-      transform: translateY(-1px);
-      transition: all 0.15s ease;
+      margin: 14px 0 32px;
     }
     .status-pill {
       background: var(--light);
       border: 1px solid var(--blush);
       border-radius: 20px;
-      padding: 6px 16px;
-      font-size: 13px;
+      padding: 5px 14px;
+      font-size: 12px;
       color: var(--mid);
+      text-decoration: none;
     }
     .status-pill.done {
       background: var(--blush);
@@ -183,160 +360,186 @@
     }
 
     /* ── POST CARDS ── */
+
     .post-card {
       background: white;
-      border-radius: 16px;
-      padding: 32px 36px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 20px rgba(46,36,33,0.06);
+      border-radius: 18px;
+      padding: 26px 30px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 18px rgba(42,24,32,0.06);
       position: relative;
       overflow: hidden;
+      transition: box-shadow 0.2s ease;
     }
+    .post-card:hover { box-shadow: 0 4px 24px rgba(42,24,32,0.1); }
     .post-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0;
-      width: 4px;
-      height: 100%;
+      width: 4px; height: 100%;
       background: var(--blush);
     }
     .post-card.active::before { background: var(--dusty-rose); }
-    .post-card.future::before { background: #ddd; }
+    .post-card.future::before { background: #d8d0d4; }
 
     .card-header {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 16px;
-      gap: 16px;
+      cursor: pointer;
+      user-select: none;
+      gap: 14px;
     }
+    .card-header:hover .post-title { color: var(--accent); }
     .post-number {
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 2px;
       color: var(--dusty-rose);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
     .post-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: 19px;
+      font-size: 17px;
       font-weight: 400;
       color: var(--deep);
-      line-height: 1.5;
+      line-height: 1.55;
+      transition: color 0.15s;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
     }
     .timing-badge {
-      flex-shrink: 0;
       background: var(--light);
       color: var(--mid);
       font-size: 11px;
-      padding: 5px 12px;
+      padding: 4px 12px;
       border-radius: 20px;
       white-space: nowrap;
     }
-    .timing-badge.now {
-      background: #fde8e2;
-      color: var(--accent);
-      font-weight: 500;
+    .expand-icon {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--blush);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      color: var(--dusty-rose);
+      flex-shrink: 0;
+      transition: transform 0.25s ease, background 0.15s;
+      font-weight: 300;
+      line-height: 1;
     }
-    .card-body {
-      font-size: 14px;
-      color: var(--mid);
-      margin-bottom: 18px;
-      line-height: 1.9;
+    .post-card.open .expand-icon {
+      transform: rotate(45deg);
+      background: var(--light);
     }
+
+    .post-content { display: none; padding-top: 2px; }
+    .post-card.open .post-content { display: block; }
+
     .quote-block {
       background: var(--cream);
-      border-radius: 10px;
-      padding: 16px 20px;
-      margin-top: 14px;
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-top: 18px;
     }
     .quote-label {
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--dusty-rose);
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
     .quote-text {
       font-family: 'Noto Serif TC', serif;
       font-size: 14px;
       color: var(--deep);
-      line-height: 1.9;
+      line-height: 2.1;
     }
-    .track-list {
-      list-style: none;
-      margin-top: 10px;
+    .card-body {
+      font-size: 14px;
+      color: var(--mid);
+      margin: 14px 0;
+      line-height: 2;
     }
+    .track-list { list-style: none; margin-top: 10px; }
     .track-list li {
       font-size: 13px;
       color: var(--mid);
-      padding: 4px 0;
-      padding-left: 16px;
+      padding: 5px 0 5px 18px;
       position: relative;
+      line-height: 1.8;
     }
     .track-list li::before {
       content: '·';
-      position: absolute;
-      left: 0;
+      position: absolute; left: 0;
       color: var(--dusty-rose);
     }
 
-    /* ── ACCORDION ── */
-    .post-card .card-header {
-      cursor: pointer;
-      user-select: none;
-    }
-    .post-card .card-header:hover .post-title {
-      color: var(--accent);
-      transition: color 0.15s;
-    }
-    .expand-icon {
-      font-size: 22px;
-      color: var(--blush);
-      flex-shrink: 0;
-      align-self: center;
-      transition: transform 0.25s ease;
-      line-height: 1;
-      font-weight: 300;
-    }
-    .post-card.open .expand-icon {
-      transform: rotate(45deg);
-    }
-    .post-content {
-      display: none;
-      padding-top: 4px;
-    }
-    .post-card.open .post-content {
-      display: block;
-    }
     .collapse-link {
       display: block;
       text-align: center;
-      margin: 24px 0 4px;
+      margin: 22px 0 4px;
       color: var(--mid);
-      font-size: 12px;
+      font-size: 11px;
       text-decoration: none;
-      letter-spacing: 1px;
-      opacity: 0.55;
+      letter-spacing: 2px;
+      opacity: 0.45;
+      text-transform: uppercase;
     }
-    .collapse-link:hover { opacity: 1; }
+    .collapse-link:hover { opacity: 0.9; }
 
-    /* ── ANALYSIS SECTION ── */
+    /* ── PROGRESS TABLE ── */
+
+    .progress-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(42,24,32,0.06);
+    }
+    .progress-table th {
+      background: var(--light);
+      color: var(--mid);
+      font-weight: 500;
+      padding: 12px 18px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    .progress-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--light);
+      color: var(--deep);
+      vertical-align: top;
+      background: white;
+    }
+    .progress-table tr:last-child td { border-bottom: none; }
+    .progress-table .alert-row td { background: #fff8f8; }
+    .progress-table .alert-row td:first-child { font-weight: 500; color: var(--warning); }
+
+    /* ── ANALYSIS ── */
+
     .analysis-card {
       background: white;
-      border-radius: 16px;
-      padding: 32px 36px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 20px rgba(46,36,33,0.06);
+      border-radius: 18px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 16px rgba(42,24,32,0.06);
     }
     .analysis-card h3 {
       font-family: 'Noto Serif TC', serif;
       font-size: 17px;
       font-weight: 400;
       color: var(--deep);
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--light);
+      line-height: 1.6;
     }
     .analysis-card h3 .label {
       font-size: 10px;
@@ -344,7 +547,8 @@
       text-transform: uppercase;
       color: var(--dusty-rose);
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
+      font-family: 'Noto Sans TC', sans-serif;
     }
 
     .highlight-box {
@@ -355,7 +559,7 @@
       margin: 16px 0;
       font-size: 14px;
       color: #7a1010;
-      line-height: 1.9;
+      line-height: 2;
     }
     .highlight-box strong { color: var(--warning); }
 
@@ -367,77 +571,95 @@
       margin: 16px 0;
       font-size: 14px;
       color: #4a2060;
-      line-height: 1.9;
+      line-height: 2;
     }
     .insight-box strong { color: #7d3c98; }
 
-    .mechanism-table {
+    .mechanism-table, .ingredient-table, .schedule-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
-      margin-top: 12px;
+      margin-top: 14px;
+      border-radius: 10px;
+      overflow: hidden;
     }
-    .mechanism-table th {
+    .mechanism-table th, .ingredient-table th, .schedule-table th {
       background: var(--light);
       color: var(--mid);
       font-weight: 500;
-      padding: 8px 14px;
+      padding: 9px 14px;
       text-align: left;
       font-size: 11px;
       letter-spacing: 1px;
     }
-    .mechanism-table td {
-      padding: 10px 14px;
+    .schedule-table th { background: #fef9f0; color: #a06828; }
+    .mechanism-table td, .ingredient-table td, .schedule-table td {
+      padding: 11px 14px;
       border-bottom: 1px solid var(--light);
       color: var(--deep);
       vertical-align: top;
-      line-height: 1.7;
+      line-height: 1.8;
+      background: white;
     }
-    .mechanism-table tr:last-child td { border-bottom: none; }
+    .schedule-table td { border-bottom-color: #fef3e0; background: #fffdf8; }
+    .mechanism-table tr:last-child td,
+    .ingredient-table tr:last-child td,
+    .schedule-table tr:last-child td { border-bottom: none; }
 
     .timeline {
-      margin: 16px 0;
+      margin: 18px 0;
       position: relative;
-      padding-left: 24px;
+      padding-left: 26px;
     }
     .timeline::before {
       content: '';
       position: absolute;
-      left: 6px;
-      top: 8px;
-      bottom: 8px;
+      left: 7px; top: 10px; bottom: 10px;
       width: 1px;
       background: var(--blush);
     }
     .timeline-item {
       position: relative;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       font-size: 13px;
       color: var(--mid);
-      line-height: 1.7;
+      line-height: 1.8;
     }
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -19px;
-      top: 7px;
-      width: 8px;
-      height: 8px;
+      left: -20px; top: 7px;
+      width: 9px; height: 9px;
       border-radius: 50%;
       background: var(--dusty-rose);
       border: 2px solid white;
       box-shadow: 0 0 0 1px var(--dusty-rose);
     }
-    .timeline-item.alert-item::before { background: var(--warning); box-shadow: 0 0 0 1px var(--warning); }
+    .timeline-item.alert-item::before {
+      background: var(--warning);
+      box-shadow: 0 0 0 1px var(--warning);
+    }
     .timeline-item strong { color: var(--deep); }
 
-    /* ── GUIDE SECTION ── */
+    .note-box {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: #1a5035;
+      line-height: 1.9;
+    }
+
+    /* ── GUIDE ── */
+
     .guide-card {
       background: white;
-      border-radius: 16px;
-      padding: 28px 32px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 20px rgba(46,36,33,0.06);
+      border-radius: 18px;
+      padding: 26px 30px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 16px rgba(42,24,32,0.06);
       position: relative;
       overflow: hidden;
     }
@@ -447,83 +669,26 @@
       top: 0; left: 0;
       width: 4px; height: 100%;
     }
-    .guide-card.strategy-1::before { background: #e67e22; }
-    .guide-card.strategy-2::before { background: #27ae60; }
-    .guide-card.strategy-3::before { background: #2980b9; }
-
+    .guide-card.strategy-1::before { background: #c07020; }
+    .guide-card.strategy-2::before { background: #2a7048; }
+    .guide-card.strategy-3::before { background: #2068a8; }
     .guide-num {
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
-    .guide-card.strategy-1 .guide-num { color: #e67e22; }
-    .guide-card.strategy-2 .guide-num { color: #27ae60; }
-    .guide-card.strategy-3 .guide-num { color: #2980b9; }
-
+    .guide-card.strategy-1 .guide-num { color: #c07020; }
+    .guide-card.strategy-2 .guide-num { color: #2a7048; }
+    .guide-card.strategy-3 .guide-num { color: #2068a8; }
     .guide-title {
       font-family: 'Noto Serif TC', serif;
       font-size: 17px;
       color: var(--deep);
       margin-bottom: 12px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
-    .guide-body {
-      font-size: 14px;
-      color: var(--mid);
-      line-height: 1.9;
-      margin-bottom: 14px;
-    }
-
-    .schedule-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 10px;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .schedule-table th {
-      background: #fef9f0;
-      color: #b07030;
-      font-weight: 500;
-      padding: 8px 14px;
-      text-align: left;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
-    .schedule-table td {
-      padding: 10px 14px;
-      border-bottom: 1px solid #fef3e0;
-      color: var(--deep);
-      vertical-align: top;
-      line-height: 1.7;
-    }
-    .schedule-table tr:last-child td { border-bottom: none; }
-
-    .ingredient-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 10px;
-    }
-    .ingredient-table th {
-      background: var(--light);
-      color: var(--mid);
-      font-weight: 500;
-      padding: 8px 14px;
-      text-align: left;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
-    .ingredient-table td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--light);
-      color: var(--deep);
-      vertical-align: top;
-      line-height: 1.7;
-    }
-    .ingredient-table tr:last-child td { border-bottom: none; }
+    .guide-body { font-size: 14px; color: var(--mid); line-height: 2; margin-bottom: 14px; }
 
     .step-list {
       list-style: none;
@@ -534,20 +699,19 @@
       counter-increment: step;
       font-size: 13px;
       color: var(--mid);
-      padding: 8px 0 8px 36px;
+      padding: 9px 0 9px 38px;
       border-bottom: 1px solid var(--light);
       position: relative;
-      line-height: 1.7;
+      line-height: 1.8;
     }
     .step-list li:last-child { border-bottom: none; }
     .step-list li::before {
       content: counter(step);
       position: absolute;
-      left: 0;
-      top: 8px;
-      width: 22px; height: 22px;
+      left: 0; top: 9px;
+      width: 24px; height: 24px;
       border-radius: 50%;
-      background: #2980b9;
+      background: #2068a8;
       color: white;
       font-size: 11px;
       display: flex;
@@ -556,95 +720,152 @@
       font-weight: 500;
     }
 
-    .note-box {
-      background: var(--green-bg);
-      border-left: 3px solid var(--green);
-      border-radius: 0 10px 10px 0;
-      padding: 14px 18px;
-      margin-top: 14px;
-      font-size: 13px;
-      color: #1a5c35;
-      line-height: 1.8;
-    }
-
-    /* ── PROGRESS ── */
-    .progress-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-      font-size: 14px;
-    }
-    .progress-table th {
-      background: var(--light);
-      color: var(--mid);
-      font-weight: 500;
-      padding: 10px 16px;
-      text-align: left;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
-    .progress-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--light);
-      color: var(--deep);
-      vertical-align: top;
-    }
-    .progress-table tr:last-child td { border-bottom: none; }
-    .progress-table .alert-row td { background: #fff8f8; color: #7a1010; }
-    .progress-table .alert-row td:first-child { font-weight: 500; color: var(--warning); }
-
     /* ── FOOTER ── */
     .footer {
       text-align: center;
-      padding: 60px 24px 48px;
-      color: rgba(46,36,33,0.3);
+      padding: 50px 24px 44px;
+      color: rgba(42,24,32,0.28);
       font-size: 12px;
       letter-spacing: 1px;
+      line-height: 2;
     }
     .footer-brand {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 16px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
       color: var(--dusty-rose);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 500px) {
+      .nav-grid { grid-template-columns: 1fr; }
+      .nav-btn { aspect-ratio: 16/7; }
+      .post-card { padding: 20px 20px; }
+      .analysis-card, .guide-card { padding: 22px 20px; }
+      .section-body { padding: 28px 16px 64px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-badge">Series Campaign Plan</div>
-    <h1>PANGKI <span>깐달걀기초</span><br>系列發文企劃</h1>
-    <div class="hero-kr">나를 위한 로맨틱한 시간</div>
-    <p class="hero-tagline">
-      酒糟肌、正在做皮膚療程、經歷更年期前期——<br>
-      在皮膚最差的狀態下被熱情招呼著試用。<br>
-      這是一個誠實記錄每一步的系列。
-    </p>
+<!-- ════════════════════════ HOME VIEW ════════════════════════ -->
+<div id="view-home" class="view active">
+
+  <div class="home-hero">
+    <img class="home-hero-img"
+         src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1400&q=85"
+         alt="PANGKI 깐달걀기초">
+    <div class="home-hero-overlay">
+      <div class="hero-eyebrow">Series Campaign Plan</div>
+      <h1>PANGKI<em>깐달걀기초</em></h1>
+      <div class="hero-kr">나를 위한 로맨틱한 시간</div>
+      <p class="hero-tagline">
+        酒糟肌、正在做皮膚療程、經歷更年期前期——<br>
+        在皮膚最差的狀態下，被熱情招呼著試用。
+      </p>
+    </div>
   </div>
 
-  <div class="container">
+  <div class="home-body">
 
-    <!-- CONTEXT -->
-    <div class="section-label"><span>背景定位</span></div>
+    <div class="section-divider"><span>關於這個系列</span></div>
+
+    <p class="intro-text">
+      這個系列最大的說服力，不是「我用了皮膚變好了」，而是：
+    </p>
+
+    <div class="intro-pull">
+      「我是在皮膚狀況最差、最嚴苛的條件下，<br>被迫開始試用的。」
+    </div>
+
+    <p class="intro-text">
+      試用起點：<strong>酒糟肌長期泛紅</strong> ＋ <strong>彩衝光雷射療程中</strong>（第2次/共6次）＋
+      <strong>月經延遲23天荷爾蒙大幅波動</strong> ＋ 已出現新紅點持續發癢。<br><br>
+      沒有人會在最差的時候主動去測試新品——這個起點本身，就是最高的可信度。
+    </p>
+
+    <div class="section-divider"><span>發文企劃</span></div>
+
+    <div class="nav-grid">
+
+      <button class="nav-btn" onclick="showSection('posts')">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" alt="">
+        <div class="nav-btn-label">
+          <div class="nav-btn-sub">Campaign</div>
+          <div class="nav-btn-title">發文計劃</div>
+          <div class="nav-btn-arrow">→ 查看貼文</div>
+        </div>
+      </button>
+
+      <button class="nav-btn" onclick="showSection('progress')">
+        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80" alt="">
+        <div class="nav-btn-label">
+          <div class="nav-btn-sub">Progress</div>
+          <div class="nav-btn-title">試用追蹤進度</div>
+          <div class="nav-btn-arrow">→ 查看紀錄</div>
+        </div>
+      </button>
+
+      <button class="nav-btn" onclick="showSection('analysis')">
+        <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80" alt="">
+        <div class="nav-btn-label">
+          <div class="nav-btn-sub">Analysis</div>
+          <div class="nav-btn-title">皮膚反應<br>分析報告</div>
+          <div class="nav-btn-arrow">→ 查看報告</div>
+        </div>
+      </button>
+
+      <button class="nav-btn" onclick="showSection('guide')">
+        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" alt="">
+        <div class="nav-btn-label">
+          <div class="nav-btn-sub">Guide</div>
+          <div class="nav-btn-title">繼續使用<br>這樣調整</div>
+          <div class="nav-btn-arrow">→ 查看建議</div>
+        </div>
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">PANGKI 깐달걀기초</div>
+    나를 위한 로맨틱한 시간<br>
+    企劃建立：2026-04-15 ｜ 最後更新：2026-04-16
+  </div>
+
+</div><!-- /home -->
+
+
+<!-- ════════════════════════ POSTS VIEW ════════════════════════ -->
+<div id="view-posts" class="view">
+  <div class="section-topbar">
+    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    <span class="section-topbar-title">發文計劃</span>
+  </div>
+  <div class="section-body">
+
+    <div class="section-banner">
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80" alt="">
+      <div class="section-banner-text">
+        <h2>發文計劃</h2>
+        <p>Series Campaign · 5 Posts</p>
+      </div>
+    </div>
 
     <div class="intro-block">
       這個系列最大的說服力，不是「我用了皮膚變好了」，而是：<br><br>
-      <strong>「我是在皮膚狀況最差、最嚴苛的條件下，被迫開始試用的。」</strong><br><br>
-      試用起點：酒糟肌長期泛紅 ＋ 彩衝光雷射療程中（第2次/共6次）＋ 月經延遲23天荷爾蒙大幅波動 ＋ 已出現新紅點持續發癢。沒有人會在最差的時候主動去測試新品——這個起點本身，就是最高的可信度。
+      <strong>「我是在皮膚狀況最差、最嚴苛的條件下，被迫開始試用的。」</strong>
     </div>
 
     <div class="status-bar">
-      <a href="#section-progress" class="status-pill done">✓ 起點照片已存檔</a>
-      <a href="#section-progress" class="status-pill done">✓ 4/14 初次試用</a>
-      <a href="#section-progress" class="status-pill done">✓ 4/15 加試洗面乳</a>
-      <a href="#section-analysis" class="status-pill alert">⚠ 4/15 中午大泛紅爆發</a>
-      <a href="#section-analysis" class="status-pill alert">⚠ 4/16 早晨再度泛紅</a>
-      <a href="#post-01" class="status-pill done">✓ 第1篇 已發</a>
+      <span class="status-pill done">✓ 4/14 初次試用</span>
+      <span class="status-pill done">✓ 4/15 加試洗面乳</span>
+      <span class="status-pill alert">⚠ 4/15 中午大泛紅爆發</span>
+      <span class="status-pill done">✓ 第1篇 已發</span>
     </div>
-
-    <!-- POSTS -->
-    <div class="section-label"><span>發文計劃</span></div>
 
     <!-- P1 -->
     <div id="post-01" class="post-card active">
@@ -653,15 +874,15 @@
           <div class="post-number">Post 01</div>
           <div class="post-title">被熱情招呼出來的試用</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div class="header-right">
           <div class="timing-badge" style="background:#e8f5e9;color:#2e7d32;">✓ 已發 4/15</div>
-          <span class="expand-icon">+</span>
+          <div class="expand-icon">+</div>
         </div>
       </div>
       <div class="post-content">
-      <div class="quote-block">
-        <div class="quote-label">Facebook 完整版</div>
-        <div class="quote-text" style="white-space:pre-line;line-height:2;">【月經遲到23天、酒糟肌發作…然後我對著鏡子做了一個最無腦的決定】
+        <div class="quote-block">
+          <div class="quote-label">Facebook 完整版</div>
+          <div class="quote-text" style="white-space:pre-line;">【月經遲到23天、酒糟肌發作…然後我對著鏡子做了一個最無腦的決定】
 
 我妹極力推坑這組保養品時，我點頭如搗蒜說好好好。
 然後，它們就在我的梳妝台上像裝置藝術一樣，供了整整半個月，我一次都沒碰過。
@@ -708,8 +929,8 @@
 #保養踩雷實錄
 #更年期
 #熟齡保養</div>
-      </div>
-      <a href="#" class="collapse-link">↑ 收起</a>
+        </div>
+        <a href="#" class="collapse-link">↑ 收起</a>
       </div>
     </div>
 
@@ -720,15 +941,15 @@
           <div class="post-number">Post 02</div>
           <div class="post-title">那個早上，我的臉選擇了原諒我。然後它後悔了。</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div class="header-right">
           <div class="timing-badge">草稿 — 待發</div>
-          <span class="expand-icon">+</span>
+          <div class="expand-icon">+</div>
         </div>
       </div>
       <div class="post-content">
-      <div class="quote-block">
-        <div class="quote-label">草稿全文</div>
-        <div class="quote-text" style="white-space:pre-line;line-height:2;">【那個早上，我的臉選擇了原諒我。然後它後悔了。】
+        <div class="quote-block">
+          <div class="quote-label">草稿全文</div>
+          <div class="quote-text" style="white-space:pre-line;">【那個早上，我的臉選擇了原諒我。然後它後悔了。】
 
 昨晚塗完一整套「碎玻璃保養品」之後，我躺在床上等死。
 
@@ -781,8 +1002,8 @@
 #敏感肌真的不能亂來
 #更年期
 #熟齡保養</div>
-      </div>
-      <a href="#" class="collapse-link">↑ 收起</a>
+        </div>
+        <a href="#" class="collapse-link">↑ 收起</a>
       </div>
     </div>
 
@@ -793,15 +1014,13 @@
           <div class="post-number">Post 03</div>
           <div class="post-title">意外沒翻車的早晨</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div class="header-right">
           <div class="timing-badge">第2篇後 1～2 週</div>
-          <span class="expand-icon">+</span>
+          <div class="expand-icon">+</div>
         </div>
       </div>
       <div class="post-content">
-        <div class="card-body">
-          以為一覺醒來臉毀了 → 早上發現沒事，有點驚喜 → 放膽試洗面乳。
-        </div>
+        <div class="card-body">以為一覺醒來臉毀了 → 早上發現沒事，有點驚喜 → 放膽試洗面乳。</div>
         <a href="#" class="collapse-link">↑ 收起</a>
       </div>
     </div>
@@ -813,9 +1032,9 @@
           <div class="post-number">Post 04</div>
           <div class="post-title">持續使用 N 週後觀察</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div class="header-right">
           <div class="timing-badge">試用 2～4 週後</div>
-          <span class="expand-icon">+</span>
+          <div class="expand-icon">+</div>
         </div>
       </div>
       <div class="post-content">
@@ -837,21 +1056,36 @@
           <div class="post-number">Post 05</div>
           <div class="post-title">酒糟肌、療程中、更年期前期——我的誠實最終報告</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div class="header-right">
           <div class="timing-badge">使用滿 4～6 週後</div>
-          <span class="expand-icon">+</span>
+          <div class="expand-icon">+</div>
         </div>
       </div>
       <div class="post-content">
-        <div class="card-body">
-          這組適合誰、不適合誰——在這些身體條件下的誠實評估。給所有敏感肌、正在做醫美、荷爾蒙波動中的人看。
-        </div>
+        <div class="card-body">這組適合誰、不適合誰——在這些身體條件下的誠實評估。給所有敏感肌、正在做醫美、荷爾蒙波動中的人看。</div>
         <a href="#" class="collapse-link">↑ 收起</a>
       </div>
     </div>
 
-    <!-- PROGRESS -->
-    <div id="section-progress" class="section-label"><span>試用追蹤進度</span></div>
+  </div>
+</div><!-- /posts -->
+
+
+<!-- ════════════════════════ PROGRESS VIEW ════════════════════════ -->
+<div id="view-progress" class="view">
+  <div class="section-topbar">
+    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    <span class="section-topbar-title">試用追蹤進度</span>
+  </div>
+  <div class="section-body">
+
+    <div class="section-banner">
+      <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1000&q=80" alt="">
+      <div class="section-banner-text">
+        <h2>試用追蹤進度</h2>
+        <p>Usage Log · Starting 2026-04-14</p>
+      </div>
+    </div>
 
     <table class="progress-table">
       <thead>
@@ -885,17 +1119,31 @@
       </tbody>
     </table>
 
-    <a href="#" class="back-to-top">↑ 回頂端</a>
+  </div>
+</div><!-- /progress -->
 
-    <!-- ANALYSIS REPORT -->
-    <div id="section-analysis" class="section-label"><span>皮膚反應分析報告</span></div>
+
+<!-- ════════════════════════ ANALYSIS VIEW ════════════════════════ -->
+<div id="view-analysis" class="view">
+  <div class="section-topbar">
+    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    <span class="section-topbar-title">皮膚反應分析報告</span>
+  </div>
+  <div class="section-body">
+
+    <div class="section-banner">
+      <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1000&q=80" alt="">
+      <div class="section-banner-text">
+        <h2>皮膚反應分析報告</h2>
+        <p>Skin Reaction Analysis</p>
+      </div>
+    </div>
 
     <div class="analysis-card">
       <h3>
         <span class="label">核心解答</span>
         為什麼冰敷可以緩解？保養品引起的不是應該沒效才對？
       </h3>
-
       <div class="insight-box">
         <strong>冰敷治的是「結果」，不是「原因」。</strong><br>
         不管是什麼原因造成泛紅，最終共同的機制都是：皮下微血管擴張。冰敷的低溫直接讓血管收縮，泛紅退去是物理反應，跟造成血管擴張的原因完全無關。<br><br>
@@ -909,15 +1157,12 @@
         <span class="label">最可能的元兇</span>
         Niacinamide（尼克醯胺）三產品堆疊
       </h3>
-
       <div class="highlight-box">
         這組 PANGKI 同時在以下三款產品都含有 나이아신아마이드（Niacinamide）：<br>
         洗面乳 ＋ 凝膠精華 ＋ 夜間安瓶<br><br>
         <strong>單一產品通常不會有問題，但三款同時用，累積劑量就可能超過酒糟肌的耐受門檻。</strong>
       </div>
-
-      <p style="font-size:14px; color:var(--mid); margin-bottom:12px;">研究指出，Niacinamide 在特定條件下會轉化為 Nicotinic acid（菸鹼酸），而菸鹼酸會觸發前列腺素（PGD2）釋放 → 皮膚微血管擴張 → 泛紅潮紅。洗面乳同時含有維生素C衍生物，Niacinamide + Vitamin C 同時使用，更加速這個轉化過程。</p>
-
+      <p style="font-size:14px; color:var(--mid); margin-bottom:14px; line-height:2;">研究指出，Niacinamide 在特定條件下會轉化為 Nicotinic acid（菸鹼酸），而菸鹼酸會觸發前列腺素（PGD2）釋放 → 皮膚微血管擴張 → 泛紅潮紅。洗面乳同時含有維生素C衍生物，Niacinamide + Vitamin C 同時使用，更加速這個轉化過程。</p>
       <table class="mechanism-table">
         <thead>
           <tr><th>加乘因素</th><th>作用機制</th></tr>
@@ -963,7 +1208,7 @@
           <strong>4/15 中午</strong> — 大泛紅爆發（臉紅如關公）。Niacinamide 累積效應達到臨界點，約12小時後延遲發作。冰敷後退紅。
         </div>
         <div class="timeline-item alert-item">
-          <strong>4/16 早晨</strong> — 起床下樓（如往常，未開電風扇）即再度大泛紅。產品仍在影響中，加上起床體溫轉換觸發已敏化的微血管。冰敷後退紅。
+          <strong>4/16 早晨</strong> — 起床下樓即再度大泛紅。產品仍在影響中，加上起床體溫轉換觸發已敏化的微血管。冰敷後退紅。
         </div>
       </div>
       <div class="note-box">
@@ -971,15 +1216,31 @@
       </div>
     </div>
 
-    <!-- USAGE GUIDE -->
-    <div class="section-label"><span>如果要繼續使用，這樣調整</span></div>
+  </div>
+</div><!-- /analysis -->
+
+
+<!-- ════════════════════════ GUIDE VIEW ════════════════════════ -->
+<div id="view-guide" class="view">
+  <div class="section-topbar">
+    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    <span class="section-topbar-title">繼續使用這樣調整</span>
+  </div>
+  <div class="section-body">
+
+    <div class="section-banner">
+      <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1000&q=80" alt="">
+      <div class="section-banner-text">
+        <h2>繼續使用這樣調整</h2>
+        <p>Usage Strategy · 3 Steps</p>
+      </div>
+    </div>
 
     <div class="intro-block" style="margin-bottom: 24px;">
       你想要的亮白、抗老、拋光光澤——這些成分確實在這組裡，而且部分真的有效。<br>
       關鍵是<strong>不要讓泛紅反應把好的效果都蓋掉</strong>，調整使用策略即可。
     </div>
 
-    <!-- Strategy 1 -->
     <div class="guide-card strategy-1">
       <div class="guide-num">Strategy 01 — 最重要</div>
       <div class="guide-title">把 Niacinamide 的量降下來</div>
@@ -1007,7 +1268,6 @@
       </div>
     </div>
 
-    <!-- Strategy 2 -->
     <div class="guide-card strategy-2">
       <div class="guide-num">Strategy 02</div>
       <div class="guide-title">早上換回你本來的低敏洗面乳</div>
@@ -1018,7 +1278,6 @@
       </div>
     </div>
 
-    <!-- Strategy 3 -->
     <div class="guide-card strategy-3">
       <div class="guide-num">Strategy 03</div>
       <div class="guide-title">泛紅發作時的急救流程</div>
@@ -1029,8 +1288,7 @@
       </ul>
     </div>
 
-    <!-- Ingredient benefits -->
-    <div class="analysis-card" style="margin-top: 4px;">
+    <div class="analysis-card" style="margin-top: 8px;">
       <h3>
         <span class="label">你期待的效果，這組真的有嗎？</span>
         功效成分誠實評估
@@ -1068,35 +1326,39 @@
     </div>
 
   </div>
-
-  <!-- FOOTER -->
-  <div class="footer">
-    <div class="footer-brand">PANGKI 깐달걀기초</div>
-    나를 위한 로맨틱한 시간<br><br>
-    企劃建立：2026-04-15 ｜ 最後更新：2026-04-16
-  </div>
+</div><!-- /guide -->
 
 
-  <script>
-    // Post card accordion
-    document.querySelectorAll('.post-card .card-header').forEach(function(header) {
-      header.addEventListener('click', function(e) {
-        // Don't toggle if clicking timing-badge or other non-toggle elements
-        var card = header.closest('.post-card');
-        card.classList.toggle('open');
-      });
+<script>
+  function showSection(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showHome() {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-home').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Post card accordion
+  document.querySelectorAll('.post-card .card-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      header.closest('.post-card').classList.toggle('open');
     });
+  });
 
-    // Collapse link — collapse card and scroll to top
-    document.querySelectorAll('.collapse-link').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        var card = link.closest('.post-card');
-        card.classList.remove('open');
-        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+  // Collapse link
+  document.querySelectorAll('.collapse-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var card = link.closest('.post-card');
+      card.classList.remove('open');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>
