@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PANGKI 發文企劃 — 나를 위한 로맨틱한 시간</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+    :root {
+      --cream: #fff5f8;
+      --blush: #f7c5d5;
+      --dusty-rose: #e8829a;
+      --deep: #3a2030;
+      --mid: #8a4f6a;
+      --light: #fde8ef;
+      --accent: #d95f82;
+      --warning: #c0392b;
+      --warning-bg: #fff0ee;
+      --green: #27ae60;
+      --green-bg: #f0fff4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--deep);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #3a1a2e 0%, #a04070 60%, #f7c5d5 100%);
+      color: white;
+      padding: 80px 40px 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(232,196,184,0.12);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(232,196,184,0.08);
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(232,196,184,0.5);
+      color: var(--blush);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .hero h1 span { color: var(--blush); }
+    .hero-kr {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 2px;
+      margin-bottom: 32px;
+    }
+    .hero-tagline {
+      max-width: 520px;
+      margin: 0 auto;
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.9;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 56px 0 28px;
+    }
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--blush);
+      opacity: 0.4;
+    }
+    .section-label span {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      white-space: nowrap;
+    }
+
+    /* ── INTRO BLOCK ── */
+    .intro-block {
+      background: white;
+      border-left: 3px solid var(--dusty-rose);
+      padding: 24px 28px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: var(--mid);
+      line-height: 2;
+    }
+    .intro-block strong {
+      color: var(--deep);
+      font-weight: 500;
+    }
+
+    /* ── STATUS BAR ── */
+    .status-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0 48px;
+    }
+    .status-pill {
+      background: var(--light);
+      border: 1px solid var(--blush);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--mid);
+    }
+    .status-pill.done {
+      background: var(--blush);
+      color: var(--deep);
+      border-color: var(--dusty-rose);
+    }
+    .status-pill.alert {
+      background: #ffe5e5;
+      color: var(--warning);
+      border-color: #ffaaaa;
+    }
+
+    /* ── POST CARDS ── */
+    .post-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 20px rgba(46,36,33,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .post-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--blush);
+    }
+    .post-card.active::before { background: var(--dusty-rose); }
+    .post-card.future::before { background: #ddd; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 16px;
+    }
+    .post-number {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--dusty-rose);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .post-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--deep);
+      line-height: 1.5;
+    }
+    .timing-badge {
+      flex-shrink: 0;
+      background: var(--light);
+      color: var(--mid);
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .timing-badge.now {
+      background: #fde8e2;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .card-body {
+      font-size: 14px;
+      color: var(--mid);
+      margin-bottom: 18px;
+      line-height: 1.9;
+    }
+    .quote-block {
+      background: var(--cream);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 14px;
+    }
+    .quote-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 8px;
+    }
+    .quote-text {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 14px;
+      color: var(--deep);
+      line-height: 1.9;
+    }
+    .track-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+    .track-list li {
+      font-size: 13px;
+      color: var(--mid);
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+    .track-list li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--dusty-rose);
+    }
+
+    /* ── ANALYSIS SECTION ── */
+    .analysis-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 20px rgba(46,36,33,0.06);
+    }
+    .analysis-card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--deep);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--light);
+    }
+    .analysis-card h3 .label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .highlight-box {
+      background: var(--warning-bg);
+      border-left: 3px solid var(--warning);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: #7a1010;
+      line-height: 1.9;
+    }
+    .highlight-box strong { color: var(--warning); }
+
+    .insight-box {
+      background: #f9f4ff;
+      border-left: 3px solid #9b59b6;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: #4a2060;
+      line-height: 1.9;
+    }
+    .insight-box strong { color: #7d3c98; }
+
+    .mechanism-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+    .mechanism-table th {
+      background: var(--light);
+      color: var(--mid);
+      font-weight: 500;
+      padding: 8px 14px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    .mechanism-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--light);
+      color: var(--deep);
+      vertical-align: top;
+      line-height: 1.7;
+    }
+    .mechanism-table tr:last-child td { border-bottom: none; }
+
+    .timeline {
+      margin: 16px 0;
+      position: relative;
+      padding-left: 24px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--blush);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -19px;
+      top: 7px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--dusty-rose);
+      border: 2px solid white;
+      box-shadow: 0 0 0 1px var(--dusty-rose);
+    }
+    .timeline-item.alert-item::before { background: var(--warning); box-shadow: 0 0 0 1px var(--warning); }
+    .timeline-item strong { color: var(--deep); }
+
+    /* ── GUIDE SECTION ── */
+    .guide-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 20px rgba(46,36,33,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .guide-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+    }
+    .guide-card.strategy-1::before { background: #e67e22; }
+    .guide-card.strategy-2::before { background: #27ae60; }
+    .guide-card.strategy-3::before { background: #2980b9; }
+
+    .guide-num {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .guide-card.strategy-1 .guide-num { color: #e67e22; }
+    .guide-card.strategy-2 .guide-num { color: #27ae60; }
+    .guide-card.strategy-3 .guide-num { color: #2980b9; }
+
+    .guide-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 17px;
+      color: var(--deep);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .guide-body {
+      font-size: 14px;
+      color: var(--mid);
+      line-height: 1.9;
+      margin-bottom: 14px;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .schedule-table th {
+      background: #fef9f0;
+      color: #b07030;
+      font-weight: 500;
+      padding: 8px 14px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    .schedule-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #fef3e0;
+      color: var(--deep);
+      vertical-align: top;
+      line-height: 1.7;
+    }
+    .schedule-table tr:last-child td { border-bottom: none; }
+
+    .ingredient-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .ingredient-table th {
+      background: var(--light);
+      color: var(--mid);
+      font-weight: 500;
+      padding: 8px 14px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    .ingredient-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--light);
+      color: var(--deep);
+      vertical-align: top;
+      line-height: 1.7;
+    }
+    .ingredient-table tr:last-child td { border-bottom: none; }
+
+    .step-list {
+      list-style: none;
+      margin: 10px 0;
+      counter-reset: step;
+    }
+    .step-list li {
+      counter-increment: step;
+      font-size: 13px;
+      color: var(--mid);
+      padding: 8px 0 8px 36px;
+      border-bottom: 1px solid var(--light);
+      position: relative;
+      line-height: 1.7;
+    }
+    .step-list li:last-child { border-bottom: none; }
+    .step-list li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #2980b9;
+      color: white;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+
+    .note-box {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #1a5c35;
+      line-height: 1.8;
+    }
+
+    /* ── PROGRESS ── */
+    .progress-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    .progress-table th {
+      background: var(--light);
+      color: var(--mid);
+      font-weight: 500;
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    .progress-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--light);
+      color: var(--deep);
+      vertical-align: top;
+    }
+    .progress-table tr:last-child td { border-bottom: none; }
+    .progress-table .alert-row td { background: #fff8f8; color: #7a1010; }
+    .progress-table .alert-row td:first-child { font-weight: 500; color: var(--warning); }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 60px 24px 48px;
+      color: rgba(46,36,33,0.3);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    .footer-brand {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 16px;
+      color: var(--dusty-rose);
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Series Campaign Plan</div>
+    <h1>PANGKI <span>깐달걀기초</span><br>系列發文企劃</h1>
+    <div class="hero-kr">나를 위한 로맨틱한 시간</div>
+    <p class="hero-tagline">
+      酒糟肌、正在做皮膚療程、經歷更年期前期——<br>
+      在皮膚最差的狀態下被熱情招呼著試用。<br>
+      這是一個誠實記錄每一步的系列。
+    </p>
+  </div>
+
+  <div class="container">
+
+    <!-- CONTEXT -->
+    <div class="section-label"><span>背景定位</span></div>
+
+    <div class="intro-block">
+      這個系列最大的說服力，不是「我用了皮膚變好了」，而是：<br><br>
+      <strong>「我是在皮膚狀況最差、最嚴苛的條件下，被迫開始試用的。」</strong><br><br>
+      試用起點：酒糟肌長期泛紅 ＋ 彩衝光雷射療程中（第2次/共6次）＋ 月經延遲23天荷爾蒙大幅波動 ＋ 已出現新紅點持續發癢。沒有人會在最差的時候主動去測試新品——這個起點本身，就是最高的可信度。
+    </div>
+
+    <div class="status-bar">
+      <div class="status-pill done">✓ 起點照片已存檔</div>
+      <div class="status-pill done">✓ 4/14 初次試用</div>
+      <div class="status-pill done">✓ 4/15 加試洗面乳</div>
+      <div class="status-pill alert">⚠ 4/15 中午大泛紅爆發</div>
+      <div class="status-pill alert">⚠ 4/16 早晨再度泛紅</div>
+      <div class="status-pill">第1篇 待發</div>
+    </div>
+
+    <!-- POSTS -->
+    <div class="section-label"><span>發文計劃</span></div>
+
+    <!-- P1 -->
+    <div class="post-card active">
+      <div class="card-header">
+        <div>
+          <div class="post-number">Post 01</div>
+          <div class="post-title">被熱情招呼出來的試用</div>
+        </div>
+        <div class="timing-badge now">現在即可發</div>
+      </div>
+      <div class="card-body">
+        妹妹寄來保養品 → 拖了兩週 → 被熱情招呼才終於試用 → 試用前皮膚最差的樣子。不需要等效果，現在就有故事可以說。
+      </div>
+      <div class="quote-block">
+        <div class="quote-label">開場金句</div>
+        <div class="quote-text">「我妹突然寄了一組韓國保養品來，叫我試試看。我說好。然後我拖了兩週。」</div>
+      </div>
+      <div class="quote-block" style="margin-top:10px;">
+        <div class="quote-label">結尾鉤子</div>
+        <div class="quote-text">「那晚我試了。然後我覺得有人在用玻璃碎片擦我的臉。」</div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="post-card">
+      <div class="card-header">
+        <div>
+          <div class="post-number">Post 02</div>
+          <div class="post-title">碎玻璃感初體驗</div>
+        </div>
+        <div class="timing-badge">第1篇後 1～2 週</div>
+      </div>
+      <div class="card-body">
+        四款逐一試用的現場感、碎玻璃感的真實描述、試用當晚的心情。
+      </div>
+      <div class="quote-block">
+        <div class="quote-label">核心句</div>
+        <div class="quote-text">「精華液一抹開，就像有人拿打碎的細碎玻璃片在臉上一直摩擦，持續、不間斷。」</div>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="post-card">
+      <div class="card-header">
+        <div>
+          <div class="post-number">Post 03</div>
+          <div class="post-title">意外沒翻車的早晨</div>
+        </div>
+        <div class="timing-badge">第2篇後 1～2 週</div>
+      </div>
+      <div class="card-body">
+        以為一覺醒來臉毀了 → 早上發現沒事，有點驚喜 → 放膽試洗面乳。
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="post-card future">
+      <div class="card-header">
+        <div>
+          <div class="post-number">Post 04</div>
+          <div class="post-title">持續使用 N 週後觀察</div>
+        </div>
+        <div class="timing-badge">試用 2～4 週後</div>
+      </div>
+      <div class="card-body">有觀察數據再發。追蹤重點：</div>
+      <ul class="track-list">
+        <li>碎玻璃感是否適應或消失？</li>
+        <li>皮膚泛紅是否改善？</li>
+        <li>膚質、膚色是否有變化？</li>
+        <li>新紅點是否繼續出現？</li>
+      </ul>
+    </div>
+
+    <!-- P5 -->
+    <div class="post-card future">
+      <div class="card-header">
+        <div>
+          <div class="post-number">Post 05</div>
+          <div class="post-title">酒糟肌、療程中、更年期前期——我的誠實最終報告</div>
+        </div>
+        <div class="timing-badge">使用滿 4～6 週後</div>
+      </div>
+      <div class="card-body">
+        這組適合誰、不適合誰——在這些身體條件下的誠實評估。給所有敏感肌、正在做醫美、荷爾蒙波動中的人看。
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="section-label"><span>試用追蹤進度</span></div>
+
+    <table class="progress-table">
+      <thead>
+        <tr>
+          <th>日期</th>
+          <th>試用內容</th>
+          <th>反應摘要</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026-04-14</td>
+          <td>化妝水、精華液、凝膠、乳霜</td>
+          <td>化妝水尚可；精華液＋乳霜強烈碎玻璃感；凝膠黏</td>
+        </tr>
+        <tr>
+          <td>2026-04-15 早</td>
+          <td>加試洗面乳</td>
+          <td>隔夜無過敏，意外驚喜</td>
+        </tr>
+        <tr class="alert-row">
+          <td>2026-04-15 中午</td>
+          <td>—（觀察期）</td>
+          <td>⚠ 大泛紅爆發，臉紅如關公；冰敷後退紅</td>
+        </tr>
+        <tr class="alert-row">
+          <td>2026-04-16 早晨</td>
+          <td>—（觀察期）</td>
+          <td>⚠ 起床下樓即再度大泛紅；冰敷後退紅；確認為 Niacinamide 堆疊型延遲潮紅反應</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ANALYSIS REPORT -->
+    <div class="section-label"><span>皮膚反應分析報告</span></div>
+
+    <div class="analysis-card">
+      <h3>
+        <span class="label">核心解答</span>
+        為什麼冰敷可以緩解？保養品引起的不是應該沒效才對？
+      </h3>
+
+      <div class="insight-box">
+        <strong>冰敷治的是「結果」，不是「原因」。</strong><br>
+        不管是什麼原因造成泛紅，最終共同的機制都是：皮下微血管擴張。冰敷的低溫直接讓血管收縮，泛紅退去是物理反應，跟造成血管擴張的原因完全無關。<br><br>
+        就像止痛藥能退燒，不管是細菌感染還是打疫苗引起的，退燒機制是一樣的。<br><br>
+        <strong>所以「冰敷有效」≠「不是保養品引起的」——反而更支持這就是保養品誘發的血管反應。</strong>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <h3>
+        <span class="label">最可能的元兇</span>
+        Niacinamide（尼克醯胺）三產品堆疊
+      </h3>
+
+      <div class="highlight-box">
+        這組 PANGKI 同時在以下三款產品都含有 나이아신아마이드（Niacinamide）：<br>
+        洗面乳 ＋ 凝膠精華 ＋ 夜間安瓶<br><br>
+        <strong>單一產品通常不會有問題，但三款同時用，累積劑量就可能超過酒糟肌的耐受門檻。</strong>
+      </div>
+
+      <p style="font-size:14px; color:var(--mid); margin-bottom:12px;">研究指出，Niacinamide 在特定條件下會轉化為 Nicotinic acid（菸鹼酸），而菸鹼酸會觸發前列腺素（PGD2）釋放 → 皮膚微血管擴張 → 泛紅潮紅。洗面乳同時含有維生素C衍生物，Niacinamide + Vitamin C 同時使用，更加速這個轉化過程。</p>
+
+      <table class="mechanism-table">
+        <thead>
+          <tr><th>加乘因素</th><th>作用機制</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>雷射後屏障未完全修復（4/10第2次施打）</td>
+            <td>屏障薄 → 成分滲透率更高 → 反應更快、更強</td>
+          </tr>
+          <tr>
+            <td>酒糟肌本身微血管不穩定</td>
+            <td>低門檻即觸發擴張</td>
+          </tr>
+          <tr>
+            <td>1,2-헥산다이올 出現在精華＋安瓶</td>
+            <td>高濃度下加重刺激感</td>
+          </tr>
+          <tr>
+            <td>Silica 微粒（精華＋乳霜）物理摩擦</td>
+            <td>破壞薄弱屏障，促進成分更深層滲透</td>
+          </tr>
+          <tr>
+            <td>起床後體溫轉換、輕微活動</td>
+            <td>已敏化的微血管，輕微血流增加即觸發潮紅</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="analysis-card">
+      <h3>
+        <span class="label">反應時間軸</span>
+        為什麼不是立刻泛紅，而是隔天才爆發？
+      </h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <strong>4/14 晚上</strong> — 初試化妝水、精華、凝膠、乳霜。碎玻璃感強烈，但無立即泛紅。
+        </div>
+        <div class="timeline-item">
+          <strong>4/15 早上</strong> — 隔夜無過敏，意外驚喜，放膽加試洗面乳。
+        </div>
+        <div class="timeline-item alert-item">
+          <strong>4/15 中午</strong> — 大泛紅爆發（臉紅如關公）。Niacinamide 累積效應達到臨界點，約12小時後延遲發作。冰敷後退紅。
+        </div>
+        <div class="timeline-item alert-item">
+          <strong>4/16 早晨</strong> — 起床下樓（如往常，未開電風扇）即再度大泛紅。產品仍在影響中，加上起床體溫轉換觸發已敏化的微血管。冰敷後退紅。
+        </div>
+      </div>
+      <div class="note-box">
+        <strong>關鍵結論：</strong> 你的反應模式完全符合「保養品引發的神經血管性潮紅」——延遲發作（累積型）、冰敷可退（血管收縮反應）、早起特別嚴重（體溫轉換觸發）、環境溫度不是主因（屏障已被敏化才是根本）。
+      </div>
+    </div>
+
+    <!-- USAGE GUIDE -->
+    <div class="section-label"><span>如果要繼續使用，這樣調整</span></div>
+
+    <div class="intro-block" style="margin-bottom: 24px;">
+      你想要的亮白、抗老、拋光光澤——這些成分確實在這組裡，而且部分真的有效。<br>
+      關鍵是<strong>不要讓泛紅反應把好的效果都蓋掉</strong>，調整使用策略即可。
+    </div>
+
+    <!-- Strategy 1 -->
+    <div class="guide-card strategy-1">
+      <div class="guide-num">Strategy 01 — 最重要</div>
+      <div class="guide-title">把 Niacinamide 的量降下來</div>
+      <div class="guide-body">
+        目前同時用了三款含 Niacinamide 的產品，這才是泛紅主因。<br>
+        <strong>建議：早上只用洗面乳＋化妝水，精華和安瓶只留晚上一次。</strong>
+      </div>
+      <table class="schedule-table">
+        <thead>
+          <tr><th>時間</th><th>建議使用</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>早上</strong></td>
+            <td>洗面乳 → 化妝水 → 防曬（不加精華、不加安瓶）</td>
+          </tr>
+          <tr>
+            <td><strong>晚上</strong></td>
+            <td>洗面乳 → 化妝水 → 精華 → 乳霜（或安瓶擇一，不要精華＋安瓶同晚）</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        這樣每天 Niacinamide 的接觸次數從「早晚三層」降回「晚上兩層」，給皮膚時間適應，兩週後若無泛紅再考慮逐步加回。
+      </div>
+    </div>
+
+    <!-- Strategy 2 -->
+    <div class="guide-card strategy-2">
+      <div class="guide-num">Strategy 02</div>
+      <div class="guide-title">早上換回你本來的低敏洗面乳</div>
+      <div class="guide-body">
+        PANGKI 洗面乳含 소듐C14-16올레핀설포네이트（強效陰離子界面活性劑），清潔力偏強，雷射後皮膚屏障還在修復中，每天用等於在磨薄屏障，後面塗什麼都更容易刺激。<br><br>
+        <strong>晚上用 PANGKI 洗面乳沒問題；早上改回你原來的低敏洗面乳就好。</strong><br>
+        屏障穩定了，後續所有美白抗老成分的效果反而更好進。
+      </div>
+    </div>
+
+    <!-- Strategy 3 -->
+    <div class="guide-card strategy-3">
+      <div class="guide-num">Strategy 03</div>
+      <div class="guide-title">泛紅發作時的急救流程</div>
+      <ul class="step-list">
+        <li>冰敷袋隔布輕敷 5～10 分鐘，退紅後繼續日常</li>
+        <li>泛紅當天早上先不要上任何 PANGKI 的東西，等退紅後才繼續</li>
+        <li>連續 3 天早上都大泛紅 → 暫停精華＋安瓶，只留化妝水觀察一週</li>
+      </ul>
+    </div>
+
+    <!-- Ingredient benefits -->
+    <div class="analysis-card" style="margin-top: 4px;">
+      <h3>
+        <span class="label">你期待的效果，這組真的有嗎？</span>
+        功效成分誠實評估
+      </h3>
+      <table class="ingredient-table">
+        <thead>
+          <tr><th>你期待的效果</th><th>對應成分</th><th>評估</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>亮白、均勻膚色</td>
+            <td>Niacinamide（三款）、Vit C衍生物（洗面乳）</td>
+            <td>有效，但要讓皮膚先穩定才看得出來</td>
+          </tr>
+          <tr>
+            <td>保濕水潤感</td>
+            <td>玻尿酸、甘油（精華）</td>
+            <td>確實有，屏障修復後效果更明顯</td>
+          </tr>
+          <tr>
+            <td>拋光光澤感</td>
+            <td>Silica 微粒（精華＋乳霜）</td>
+            <td>短期視覺效果有；但對酒糟肌是雙面刃——屏障修復後才會感受到光澤而非碎玻璃</td>
+          </tr>
+          <tr>
+            <td>抗老修護</td>
+            <td>Palmitoyl tripeptide（洗面乳）、Niacinamide</td>
+            <td>需持續使用 4～6 週才有感</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note-box">
+        <strong>坦白說：</strong> Silica 的「光澤感」現在感受到的是碎玻璃，不是光滑——因為屏障太薄。等皮膚屏障修復一些後，同樣的 Silica 才有機會帶來你想要的那種打亮感。<strong>穩定皮膚 &gt; 硬撐全套——硬撐讓皮膚一直處於發炎狀態，所有美白抗老都是白費。</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">PANGKI 깐달걀기초</div>
+    나를 위한 로맨틱한 시간<br><br>
+    企劃建立：2026-04-15 ｜ 最後更新：2026-04-16
+  </div>
+
+</body>
+</html>
