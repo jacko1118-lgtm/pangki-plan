@@ -711,50 +711,40 @@
       font-weight: 500;
     }
 
-    /* ── HOME PHOTO STRIP ── */
-    .home-photo-strip {
+    /* ── HOME DECO PHOTOS ── */
+    .home-deco-photos {
+      margin: 32px 0 10px;
+    }
+    .deco-flowers-row {
       display: flex;
-      gap: 14px;
       justify-content: center;
-      align-items: center;
-      margin: 30px 0 34px;
-      padding: 0 8px;
+      gap: 26px;
+      margin-bottom: 14px;
+      opacity: 0.6;
     }
-    .photo-circle {
-      width: 86px;
-      height: 86px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2.5px solid var(--blush);
-      box-shadow: 0 4px 18px rgba(200,122,150,0.18);
-      flex-shrink: 0;
-      transition: transform 0.32s ease, box-shadow 0.32s ease;
-    }
-    .photo-circle:hover {
-      transform: scale(1.07) rotate(-2deg);
-      box-shadow: 0 10px 30px rgba(200,122,150,0.32);
-    }
-    .photo-circle.lg {
-      width: 108px;
-      height: 108px;
-      border-color: var(--dusty-rose);
-    }
-    .photo-circle img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    .deco-flower {
-      opacity: 0.55;
-      flex-shrink: 0;
+    .deco-flowers-row svg {
       animation: floatPetal 5s ease-in-out infinite;
     }
-    .deco-flower:last-child {
-      animation-delay: 1.8s;
-      animation-direction: reverse;
-    }
+    .deco-flowers-row svg:nth-child(2) { animation-delay: 1.2s; }
+    .deco-flowers-row svg:nth-child(3) { animation-delay: 2.4s; }
     @keyframes floatPetal {
       0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-7px) rotate(12deg); }
+      50%       { transform: translateY(-6px) rotate(10deg); }
+    }
+    .deco-img-row {
+      display: flex;
+      gap: 10px;
+    }
+    .deco-img-row img {
+      flex: 1;
+      min-width: 0;
+      height: 128px;
+      object-fit: cover;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(42,24,32,0.09);
+      display: block;
+      pointer-events: none;
+      user-select: none;
     }
 
     /* ── FOOTER ── */
@@ -817,58 +807,56 @@
       「我是在皮膚狀況最差、最嚴苛的條件下，<br>鼓起勇氣開始試用的。」
     </div>
 
-    <div class="home-photo-strip">
-
-      <!-- 左花 -->
-      <div class="deco-flower">
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g transform="translate(17,17)">
-            <ellipse rx="4" ry="7.5" fill="#f0c4d2" transform="rotate(0) translate(0,-4)"/>
-            <ellipse rx="4" ry="7.5" fill="#f5d0dc" transform="rotate(72) translate(0,-4)"/>
-            <ellipse rx="4" ry="7.5" fill="#f0c4d2" transform="rotate(144) translate(0,-4)"/>
-            <ellipse rx="4" ry="7.5" fill="#f5d0dc" transform="rotate(216) translate(0,-4)"/>
-            <ellipse rx="4" ry="7.5" fill="#f0c4d2" transform="rotate(288) translate(0,-4)"/>
-            <circle r="4.5" fill="#c87a96"/>
-            <circle r="2" fill="#fdf8f5"/>
-          </g>
-        </svg>
-      </div>
-
-      <!-- 圓形照片 × 3 -->
-      <div class="photo-circle">
-        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=220&q=85" alt="保養品">
-      </div>
-
-      <div class="photo-circle lg">
-        <img src="https://images.unsplash.com/photo-1604977042946-1eecc30f269c?auto=format&fit=crop&w=240&q=85" alt="粉色玫瑰">
-      </div>
-
-      <div class="photo-circle">
-        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=220&q=85" alt="乳霜質地">
-      </div>
-
-      <!-- 右花 -->
-      <div class="deco-flower">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g transform="translate(14,14)">
-            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(0) translate(0,-3)"/>
-            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(60) translate(0,-3)"/>
-            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(120) translate(0,-3)"/>
-            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(180) translate(0,-3)"/>
-            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(240) translate(0,-3)"/>
-            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(300) translate(0,-3)"/>
-            <circle r="3.5" fill="#c87a96"/>
-          </g>
-        </svg>
-      </div>
-
-    </div>
-
     <p class="intro-text">
       試用起點：<strong>酒糟肌長期泛紅</strong> ＋ <strong>彩衝光雷射療程中</strong>（第2次/共6次）＋
       <strong>月經延遲23天荷爾蒙大幅波動</strong> ＋ 已出現新紅點持續發癢。<br><br>
       沒有人會在最差的時候主動去測試新品——這個起點本身，就是最高的可信度。
     </p>
+
+    <!-- 裝飾圖片區 -->
+    <div class="home-deco-photos">
+      <div class="deco-flowers-row">
+        <!-- 小花 1 -->
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(11,11)">
+            <ellipse rx="2.8" ry="5.5" fill="#f0c4d2" transform="rotate(0) translate(0,-3)"/>
+            <ellipse rx="2.8" ry="5.5" fill="#f5d0dc" transform="rotate(72) translate(0,-3)"/>
+            <ellipse rx="2.8" ry="5.5" fill="#f0c4d2" transform="rotate(144) translate(0,-3)"/>
+            <ellipse rx="2.8" ry="5.5" fill="#f5d0dc" transform="rotate(216) translate(0,-3)"/>
+            <ellipse rx="2.8" ry="5.5" fill="#f0c4d2" transform="rotate(288) translate(0,-3)"/>
+            <circle r="3.2" fill="#c87a96"/><circle r="1.4" fill="#fdf8f5"/>
+          </g>
+        </svg>
+        <!-- 小花 2（六瓣） -->
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(13,13)">
+            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(0) translate(0,-3.2)"/>
+            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(60) translate(0,-3.2)"/>
+            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(120) translate(0,-3.2)"/>
+            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(180) translate(0,-3.2)"/>
+            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(240) translate(0,-3.2)"/>
+            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(300) translate(0,-3.2)"/>
+            <circle r="3.8" fill="#c87a96"/><circle r="1.6" fill="#fdf8f5"/>
+          </g>
+        </svg>
+        <!-- 小花 3 -->
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(10,10)">
+            <ellipse rx="2.4" ry="4.8" fill="#f5d0dc" transform="rotate(0) translate(0,-2.6)"/>
+            <ellipse rx="2.4" ry="4.8" fill="#f0c4d2" transform="rotate(72) translate(0,-2.6)"/>
+            <ellipse rx="2.4" ry="4.8" fill="#f5d0dc" transform="rotate(144) translate(0,-2.6)"/>
+            <ellipse rx="2.4" ry="4.8" fill="#f0c4d2" transform="rotate(216) translate(0,-2.6)"/>
+            <ellipse rx="2.4" ry="4.8" fill="#f5d0dc" transform="rotate(288) translate(0,-2.6)"/>
+            <circle r="2.8" fill="#c87a96"/>
+          </g>
+        </svg>
+      </div>
+      <div class="deco-img-row">
+        <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=400&q=85" alt="">
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=85" alt="">
+        <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=400&q=85" alt="">
+      </div>
+    </div>
 
     <div class="section-divider"><span>發文企劃</span></div>
 
