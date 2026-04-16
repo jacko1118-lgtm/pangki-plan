@@ -128,15 +128,15 @@
       white-space: nowrap;
     }
     .intro-text {
-      font-size: 15px;
+      font-size: 17px;
       color: var(--mid);
-      line-height: 2.2;
+      line-height: 2.3;
       text-align: center;
     }
     .intro-text strong { color: var(--deep); font-weight: 500; }
     .intro-pull {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(18px, 4vw, 24px);
+      font-size: clamp(22px, 4.5vw, 30px);
       font-style: italic;
       color: var(--dusty-rose);
       text-align: center;
@@ -199,14 +199,14 @@
     }
     .nav-btn-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: clamp(13px, 2.6vw, 17px);
+      font-size: clamp(16px, 3.2vw, 22px);
       font-weight: 400;
       color: white;
       letter-spacing: 1px;
       line-height: 1.55;
     }
     .nav-btn-arrow {
-      font-size: 10px;
+      font-size: 13px;
       color: rgba(255,255,255,0.4);
       margin-top: 12px;
       letter-spacing: 2px;
@@ -214,49 +214,37 @@
 
     /* ══════════════ SECTION VIEWS ══════════════ */
 
-    .section-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(253,248,245,0.93);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(240,196,210,0.35);
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
+    .section-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 48px;
+    }
+
+    .bottom-back {
+      text-align: center;
+      padding: 48px 24px 60px;
     }
     .back-btn {
-      background: none;
-      border: 1px solid var(--blush);
-      border-radius: 20px;
-      padding: 6px 16px;
-      font-size: 12px;
+      display: inline-block;
+      background: white;
+      border: 2px solid var(--blush);
+      border-radius: 50px;
+      padding: 16px 44px;
+      font-size: 18px;
       color: var(--mid);
       cursor: pointer;
-      font-family: 'Noto Sans TC', sans-serif;
-      font-weight: 300;
-      letter-spacing: 1px;
-      transition: all 0.15s;
-      white-space: nowrap;
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 400;
+      letter-spacing: 2px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 16px rgba(42,24,32,0.07);
     }
     .back-btn:hover {
       background: var(--light);
       border-color: var(--dusty-rose);
       color: var(--accent);
-    }
-    .section-topbar-title {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 14px;
-      color: var(--mid);
-      letter-spacing: 1px;
-    }
-
-    .section-body {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 36px 24px 80px;
+      box-shadow: 0 4px 24px rgba(42,24,32,0.14);
+      transform: translateY(-2px);
     }
 
     /* SECTION BANNER */
@@ -327,7 +315,7 @@
       padding: 22px 26px;
       border-radius: 0 14px 14px 0;
       margin-bottom: 16px;
-      font-size: 15px;
+      font-size: 17px;
       color: var(--mid);
       line-height: 2.1;
     }
@@ -400,7 +388,7 @@
     }
     .post-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 400;
       color: var(--deep);
       line-height: 1.55;
@@ -455,19 +443,19 @@
     }
     .quote-text {
       font-family: 'Noto Serif TC', serif;
-      font-size: 14px;
+      font-size: 16px;
       color: var(--deep);
-      line-height: 2.1;
+      line-height: 2.2;
     }
     .card-body {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--mid);
       margin: 14px 0;
-      line-height: 2;
+      line-height: 2.1;
     }
     .track-list { list-style: none; margin-top: 10px; }
     .track-list li {
-      font-size: 13px;
+      font-size: 16px;
       color: var(--mid);
       padding: 5px 0 5px 18px;
       position: relative;
@@ -508,7 +496,7 @@
       font-weight: 500;
       padding: 12px 18px;
       text-align: left;
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 1px;
     }
     .progress-table td {
@@ -517,6 +505,8 @@
       color: var(--deep);
       vertical-align: top;
       background: white;
+      font-size: 15px;
+      line-height: 1.9;
     }
     .progress-table tr:last-child td { border-bottom: none; }
     .progress-table .alert-row td { background: #fff8f8; }
@@ -533,7 +523,7 @@
     }
     .analysis-card h3 {
       font-family: 'Noto Serif TC', serif;
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 400;
       color: var(--deep);
       margin-bottom: 18px;
@@ -555,11 +545,11 @@
       background: var(--warning-bg);
       border-left: 3px solid var(--warning);
       border-radius: 0 10px 10px 0;
-      padding: 16px 20px;
+      padding: 18px 22px;
       margin: 16px 0;
-      font-size: 14px;
+      font-size: 16px;
       color: #7a1010;
-      line-height: 2;
+      line-height: 2.1;
     }
     .highlight-box strong { color: var(--warning); }
 
@@ -567,11 +557,11 @@
       background: #f9f4ff;
       border-left: 3px solid #9b59b6;
       border-radius: 0 10px 10px 0;
-      padding: 16px 20px;
+      padding: 18px 22px;
       margin: 16px 0;
-      font-size: 14px;
+      font-size: 16px;
       color: #4a2060;
-      line-height: 2;
+      line-height: 2.1;
     }
     .insight-box strong { color: #7d3c98; }
 
@@ -587,19 +577,20 @@
       background: var(--light);
       color: var(--mid);
       font-weight: 500;
-      padding: 9px 14px;
+      padding: 11px 16px;
       text-align: left;
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 1px;
     }
     .schedule-table th { background: #fef9f0; color: #a06828; }
     .mechanism-table td, .ingredient-table td, .schedule-table td {
-      padding: 11px 14px;
+      padding: 13px 16px;
       border-bottom: 1px solid var(--light);
       color: var(--deep);
       vertical-align: top;
-      line-height: 1.8;
+      line-height: 1.9;
       background: white;
+      font-size: 15px;
     }
     .schedule-table td { border-bottom-color: #fef3e0; background: #fffdf8; }
     .mechanism-table tr:last-child td,
@@ -620,8 +611,8 @@
     }
     .timeline-item {
       position: relative;
-      margin-bottom: 16px;
-      font-size: 13px;
+      margin-bottom: 18px;
+      font-size: 16px;
       color: var(--mid);
       line-height: 1.8;
     }
@@ -645,9 +636,9 @@
       background: var(--green-bg);
       border-left: 3px solid var(--green);
       border-radius: 0 10px 10px 0;
-      padding: 14px 18px;
+      padding: 16px 20px;
       margin-top: 16px;
-      font-size: 13px;
+      font-size: 15px;
       color: #1a5035;
       line-height: 1.9;
     }
@@ -683,12 +674,12 @@
     .guide-card.strategy-3 .guide-num { color: #2068a8; }
     .guide-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: 17px;
+      font-size: 20px;
       color: var(--deep);
       margin-bottom: 12px;
       line-height: 1.55;
     }
-    .guide-body { font-size: 14px; color: var(--mid); line-height: 2; margin-bottom: 14px; }
+    .guide-body { font-size: 17px; color: var(--mid); line-height: 2.1; margin-bottom: 14px; }
 
     .step-list {
       list-style: none;
@@ -697,7 +688,7 @@
     }
     .step-list li {
       counter-increment: step;
-      font-size: 13px;
+      font-size: 16px;
       color: var(--mid);
       padding: 9px 0 9px 38px;
       border-bottom: 1px solid var(--light);
@@ -841,10 +832,6 @@
 
 <!-- ════════════════════════ POSTS VIEW ════════════════════════ -->
 <div id="view-posts" class="view">
-  <div class="section-topbar">
-    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
-    <span class="section-topbar-title">發文計劃</span>
-  </div>
   <div class="section-body">
 
     <div class="section-banner">
@@ -1067,16 +1054,15 @@
       </div>
     </div>
 
+    <div class="bottom-back">
+      <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    </div>
   </div>
 </div><!-- /posts -->
 
 
 <!-- ════════════════════════ PROGRESS VIEW ════════════════════════ -->
 <div id="view-progress" class="view">
-  <div class="section-topbar">
-    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
-    <span class="section-topbar-title">試用追蹤進度</span>
-  </div>
   <div class="section-body">
 
     <div class="section-banner">
@@ -1119,16 +1105,15 @@
       </tbody>
     </table>
 
+    <div class="bottom-back">
+      <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    </div>
   </div>
 </div><!-- /progress -->
 
 
 <!-- ════════════════════════ ANALYSIS VIEW ════════════════════════ -->
 <div id="view-analysis" class="view">
-  <div class="section-topbar">
-    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
-    <span class="section-topbar-title">皮膚反應分析報告</span>
-  </div>
   <div class="section-body">
 
     <div class="section-banner">
@@ -1216,16 +1201,15 @@
       </div>
     </div>
 
+    <div class="bottom-back">
+      <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    </div>
   </div>
 </div><!-- /analysis -->
 
 
 <!-- ════════════════════════ GUIDE VIEW ════════════════════════ -->
 <div id="view-guide" class="view">
-  <div class="section-topbar">
-    <button class="back-btn" onclick="showHome()">← 返回首頁</button>
-    <span class="section-topbar-title">繼續使用這樣調整</span>
-  </div>
   <div class="section-body">
 
     <div class="section-banner">
@@ -1325,6 +1309,9 @@
       </div>
     </div>
 
+    <div class="bottom-back">
+      <button class="back-btn" onclick="showHome()">← 返回首頁</button>
+    </div>
   </div>
 </div><!-- /guide -->
 
