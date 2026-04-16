@@ -711,6 +711,52 @@
       font-weight: 500;
     }
 
+    /* ── HOME PHOTO STRIP ── */
+    .home-photo-strip {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+      margin: 30px 0 34px;
+      padding: 0 8px;
+    }
+    .photo-circle {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2.5px solid var(--blush);
+      box-shadow: 0 4px 18px rgba(200,122,150,0.18);
+      flex-shrink: 0;
+      transition: transform 0.32s ease, box-shadow 0.32s ease;
+    }
+    .photo-circle:hover {
+      transform: scale(1.07) rotate(-2deg);
+      box-shadow: 0 10px 30px rgba(200,122,150,0.32);
+    }
+    .photo-circle.lg {
+      width: 108px;
+      height: 108px;
+      border-color: var(--dusty-rose);
+    }
+    .photo-circle img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .deco-flower {
+      opacity: 0.55;
+      flex-shrink: 0;
+      animation: floatPetal 5s ease-in-out infinite;
+    }
+    .deco-flower:last-child {
+      animation-delay: 1.8s;
+      animation-direction: reverse;
+    }
+    @keyframes floatPetal {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(12deg); }
+    }
+
     /* ── FOOTER ── */
     .footer {
       text-align: center;
@@ -769,6 +815,53 @@
 
     <div class="intro-pull">
       「我是在皮膚狀況最差、最嚴苛的條件下，<br>鼓起勇氣開始試用的。」
+    </div>
+
+    <div class="home-photo-strip">
+
+      <!-- 左花 -->
+      <div class="deco-flower">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(17,17)">
+            <ellipse rx="4" ry="7.5" fill="#f0c4d2" transform="rotate(0) translate(0,-4)"/>
+            <ellipse rx="4" ry="7.5" fill="#f5d0dc" transform="rotate(72) translate(0,-4)"/>
+            <ellipse rx="4" ry="7.5" fill="#f0c4d2" transform="rotate(144) translate(0,-4)"/>
+            <ellipse rx="4" ry="7.5" fill="#f5d0dc" transform="rotate(216) translate(0,-4)"/>
+            <ellipse rx="4" ry="7.5" fill="#f0c4d2" transform="rotate(288) translate(0,-4)"/>
+            <circle r="4.5" fill="#c87a96"/>
+            <circle r="2" fill="#fdf8f5"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- 圓形照片 × 3 -->
+      <div class="photo-circle">
+        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=220&q=85" alt="保養品">
+      </div>
+
+      <div class="photo-circle lg">
+        <img src="https://images.unsplash.com/photo-1604977042946-1eecc30f269c?auto=format&fit=crop&w=240&q=85" alt="粉色玫瑰">
+      </div>
+
+      <div class="photo-circle">
+        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=220&q=85" alt="乳霜質地">
+      </div>
+
+      <!-- 右花 -->
+      <div class="deco-flower">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(14,14)">
+            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(0) translate(0,-3)"/>
+            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(60) translate(0,-3)"/>
+            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(120) translate(0,-3)"/>
+            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(180) translate(0,-3)"/>
+            <ellipse rx="3" ry="6" fill="#e8b4c4" transform="rotate(240) translate(0,-3)"/>
+            <ellipse rx="3" ry="6" fill="#f0c4d2" transform="rotate(300) translate(0,-3)"/>
+            <circle r="3.5" fill="#c87a96"/>
+          </g>
+        </svg>
+      </div>
+
     </div>
 
     <p class="intro-text">
