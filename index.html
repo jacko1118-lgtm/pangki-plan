@@ -142,6 +142,15 @@
       flex-wrap: wrap;
       margin: 20px 0 48px;
     }
+    a.status-pill {
+      text-decoration: none;
+      cursor: pointer;
+    }
+    a.status-pill:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+      transition: all 0.15s ease;
+    }
     .status-pill {
       background: var(--light);
       border: 1px solid var(--blush);
@@ -574,19 +583,19 @@
     </div>
 
     <div class="status-bar">
-      <div class="status-pill done">✓ 起點照片已存檔</div>
-      <div class="status-pill done">✓ 4/14 初次試用</div>
-      <div class="status-pill done">✓ 4/15 加試洗面乳</div>
-      <div class="status-pill alert">⚠ 4/15 中午大泛紅爆發</div>
-      <div class="status-pill alert">⚠ 4/16 早晨再度泛紅</div>
-      <div class="status-pill">第1篇 待發</div>
+      <a href="#section-progress" class="status-pill done">✓ 起點照片已存檔</a>
+      <a href="#section-progress" class="status-pill done">✓ 4/14 初次試用</a>
+      <a href="#section-progress" class="status-pill done">✓ 4/15 加試洗面乳</a>
+      <a href="#section-analysis" class="status-pill alert">⚠ 4/15 中午大泛紅爆發</a>
+      <a href="#section-analysis" class="status-pill alert">⚠ 4/16 早晨再度泛紅</a>
+      <a href="#post-01" class="status-pill">第1篇 待發</a>
     </div>
 
     <!-- POSTS -->
     <div class="section-label"><span>發文計劃</span></div>
 
     <!-- P1 -->
-    <div class="post-card active">
+    <div id="post-01" class="post-card active">
       <div class="card-header">
         <div>
           <div class="post-number">Post 01</div>
@@ -672,7 +681,7 @@
     </div>
 
     <!-- PROGRESS -->
-    <div class="section-label"><span>試用追蹤進度</span></div>
+    <div id="section-progress" class="section-label"><span>試用追蹤進度</span></div>
 
     <table class="progress-table">
       <thead>
@@ -707,7 +716,7 @@
     </table>
 
     <!-- ANALYSIS REPORT -->
-    <div class="section-label"><span>皮膚反應分析報告</span></div>
+    <div id="section-analysis" class="section-label"><span>皮膚反應分析報告</span></div>
 
     <div class="analysis-card">
       <h3>
