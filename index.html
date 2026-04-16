@@ -281,6 +281,46 @@
       color: var(--dusty-rose);
     }
 
+    /* ── ACCORDION ── */
+    .post-card .card-header {
+      cursor: pointer;
+      user-select: none;
+    }
+    .post-card .card-header:hover .post-title {
+      color: var(--accent);
+      transition: color 0.15s;
+    }
+    .expand-icon {
+      font-size: 22px;
+      color: var(--blush);
+      flex-shrink: 0;
+      align-self: center;
+      transition: transform 0.25s ease;
+      line-height: 1;
+      font-weight: 300;
+    }
+    .post-card.open .expand-icon {
+      transform: rotate(45deg);
+    }
+    .post-content {
+      display: none;
+      padding-top: 4px;
+    }
+    .post-card.open .post-content {
+      display: block;
+    }
+    .collapse-link {
+      display: block;
+      text-align: center;
+      margin: 24px 0 4px;
+      color: var(--mid);
+      font-size: 12px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      opacity: 0.55;
+    }
+    .collapse-link:hover { opacity: 1; }
+
     /* ── ANALYSIS SECTION ── */
     .analysis-card {
       background: white;
@@ -613,8 +653,12 @@
           <div class="post-number">Post 01</div>
           <div class="post-title">被熱情招呼出來的試用</div>
         </div>
-        <div class="timing-badge" style="background:#e8f5e9;color:#2e7d32;">✓ 已發 4/15</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <div class="timing-badge" style="background:#e8f5e9;color:#2e7d32;">✓ 已發 4/15</div>
+          <span class="expand-icon">+</span>
+        </div>
       </div>
+      <div class="post-content">
       <div class="quote-block">
         <div class="quote-label">Facebook 完整版</div>
         <div class="quote-text" style="white-space:pre-line;line-height:2;">【月經遲到23天、酒糟肌發作…然後我對著鏡子做了一個最無腦的決定】
@@ -665,9 +709,9 @@
 #更年期
 #熟齡保養</div>
       </div>
+      <a href="#" class="collapse-link">↑ 收起</a>
+      </div>
     </div>
-
-    <a href="#" class="back-to-top">↑ 回首頁</a>
 
     <!-- P2 -->
     <div id="post-02" class="post-card">
@@ -676,8 +720,12 @@
           <div class="post-number">Post 02</div>
           <div class="post-title">那個早上，我的臉選擇了原諒我。然後它後悔了。</div>
         </div>
-        <div class="timing-badge">草稿 — 待發</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <div class="timing-badge">草稿 — 待發</div>
+          <span class="expand-icon">+</span>
+        </div>
       </div>
+      <div class="post-content">
       <div class="quote-block">
         <div class="quote-label">草稿全文</div>
         <div class="quote-text" style="white-space:pre-line;line-height:2;">【那個早上，我的臉選擇了原諒我。然後它後悔了。】
@@ -734,9 +782,9 @@
 #更年期
 #熟齡保養</div>
       </div>
+      <a href="#" class="collapse-link">↑ 收起</a>
+      </div>
     </div>
-
-    <a href="#" class="back-to-top">↑ 回首頁</a>
 
     <!-- P3 -->
     <div class="post-card">
@@ -745,14 +793,18 @@
           <div class="post-number">Post 03</div>
           <div class="post-title">意外沒翻車的早晨</div>
         </div>
-        <div class="timing-badge">第2篇後 1～2 週</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <div class="timing-badge">第2篇後 1～2 週</div>
+          <span class="expand-icon">+</span>
+        </div>
       </div>
-      <div class="card-body">
-        以為一覺醒來臉毀了 → 早上發現沒事，有點驚喜 → 放膽試洗面乳。
+      <div class="post-content">
+        <div class="card-body">
+          以為一覺醒來臉毀了 → 早上發現沒事，有點驚喜 → 放膽試洗面乳。
+        </div>
+        <a href="#" class="collapse-link">↑ 收起</a>
       </div>
     </div>
-
-    <a href="#" class="back-to-top">↑ 回首頁</a>
 
     <!-- P4 -->
     <div class="post-card future">
@@ -761,18 +813,22 @@
           <div class="post-number">Post 04</div>
           <div class="post-title">持續使用 N 週後觀察</div>
         </div>
-        <div class="timing-badge">試用 2～4 週後</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <div class="timing-badge">試用 2～4 週後</div>
+          <span class="expand-icon">+</span>
+        </div>
       </div>
-      <div class="card-body">有觀察數據再發。追蹤重點：</div>
-      <ul class="track-list">
-        <li>碎玻璃感是否適應或消失？</li>
-        <li>皮膚泛紅是否改善？</li>
-        <li>膚質、膚色是否有變化？</li>
-        <li>新紅點是否繼續出現？</li>
-      </ul>
+      <div class="post-content">
+        <div class="card-body">有觀察數據再發。追蹤重點：</div>
+        <ul class="track-list">
+          <li>碎玻璃感是否適應或消失？</li>
+          <li>皮膚泛紅是否改善？</li>
+          <li>膚質、膚色是否有變化？</li>
+          <li>新紅點是否繼續出現？</li>
+        </ul>
+        <a href="#" class="collapse-link">↑ 收起</a>
+      </div>
     </div>
-
-    <a href="#" class="back-to-top">↑ 回首頁</a>
 
     <!-- P5 -->
     <div class="post-card future">
@@ -781,14 +837,18 @@
           <div class="post-number">Post 05</div>
           <div class="post-title">酒糟肌、療程中、更年期前期——我的誠實最終報告</div>
         </div>
-        <div class="timing-badge">使用滿 4～6 週後</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <div class="timing-badge">使用滿 4～6 週後</div>
+          <span class="expand-icon">+</span>
+        </div>
       </div>
-      <div class="card-body">
-        這組適合誰、不適合誰——在這些身體條件下的誠實評估。給所有敏感肌、正在做醫美、荷爾蒙波動中的人看。
+      <div class="post-content">
+        <div class="card-body">
+          這組適合誰、不適合誰——在這些身體條件下的誠實評估。給所有敏感肌、正在做醫美、荷爾蒙波動中的人看。
+        </div>
+        <a href="#" class="collapse-link">↑ 收起</a>
       </div>
     </div>
-
-    <a href="#" class="back-to-top">↑ 回首頁</a>
 
     <!-- PROGRESS -->
     <div id="section-progress" class="section-label"><span>試用追蹤進度</span></div>
@@ -1016,7 +1076,27 @@
     企劃建立：2026-04-15 ｜ 最後更新：2026-04-16
   </div>
 
-  <a href="#" class="back-to-top" style="margin-bottom:48px;">↑ 回頂端</a>
+
+  <script>
+    // Post card accordion
+    document.querySelectorAll('.post-card .card-header').forEach(function(header) {
+      header.addEventListener('click', function(e) {
+        // Don't toggle if clicking timing-badge or other non-toggle elements
+        var card = header.closest('.post-card');
+        card.classList.toggle('open');
+      });
+    });
+
+    // Collapse link — collapse card and scroll to top
+    document.querySelectorAll('.collapse-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var card = link.closest('.post-card');
+        card.classList.remove('open');
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
 
 </body>
 </html>
