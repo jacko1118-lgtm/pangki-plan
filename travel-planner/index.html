@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>汶豆油旅遊助手</title>
+  <style>
+    :root {
+      --green: #287a6b;
+      --green-dark: #1f6659;
+      --mint: #d9eee8;
+      --cream: #f4f1e9;
+      --paper: #fffdf8;
+      --ink: #16181d;
+      --muted: #737884;
+      --line: #dedbd2;
+      --violet: #8b7fd1;
+      --gold: #c8ad45;
+      --coral: #dd694f;
+      --sky: #4f91b3;
+      --shadow: 0 14px 34px rgba(34, 38, 31, .10);
+      --radius: 8px;
+      font-family: "PingFang TC", "Noto Sans TC", "Hiragino Sans", system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--cream);
+      letter-spacing: 0;
+    }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { border: 0; cursor: pointer; }
+
+    .view { display: none; }
+    .view.active { display: block; animation: fadeIn .25s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .home-hero {
+      position: relative;
+      min-height: 68vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+      background:
+        linear-gradient(155deg, rgba(20, 67, 59, .72), rgba(20, 67, 59, .92)),
+        url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1600&q=85") center/cover;
+    }
+    .home-hero::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 22%;
+      background: linear-gradient(transparent, var(--cream));
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(760px, calc(100% - 36px));
+      padding: 56px 0 96px;
+    }
+    .brand-kicker {
+      margin: 0 0 18px;
+      color: #e0c75d;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .34em;
+    }
+    .brand-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(46px, 11vw, 86px);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .hero-tagline {
+      max-width: 540px;
+      margin: 20px auto 28px;
+      color: rgba(255,255,255,.82);
+      font-size: 16px;
+      line-height: 2;
+      font-weight: 700;
+    }
+    .trip-switch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: min(360px, 100%);
+      min-height: 54px;
+      margin: 0 auto;
+      padding: 0 16px;
+      color: white;
+      background: rgba(255, 255, 255, .18);
+      border: 1px solid rgba(255, 255, 255, .26);
+      border-radius: 999px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+    }
+    .trip-switch input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      color: white;
+      background: transparent;
+      font-weight: 900;
+    }
+    .trip-switch input::placeholder { color: rgba(255,255,255,.62); }
+
+    .home-body {
+      width: min(980px, calc(100% - 32px));
+      margin: -56px auto 0;
+      position: relative;
+      z-index: 2;
+      padding-bottom: 64px;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+    .metric, .module, .list-card, .nav-btn {
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .metric {
+      min-height: 116px;
+      padding: 18px;
+      display: grid;
+      align-content: space-between;
+      min-width: 0;
+      border: 1px solid rgba(222, 219, 210, .75);
+    }
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .metric strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(22px, 3.1vw, 34px);
+      line-height: 1;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      white-space: nowrap;
+    }
+    .metric.green {
+      color: white;
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .metric.green span { color: rgba(255,255,255,.74); }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 30px 0 24px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: .6;
+    }
+    .section-divider span {
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .22em;
+      white-space: nowrap;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .nav-btn {
+      position: relative;
+      min-height: 176px;
+      overflow: hidden;
+      display: block;
+      padding: 0;
+      text-align: left;
+      background: var(--green-dark);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 44px rgba(34, 38, 31, .16);
+    }
+    .nav-btn img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+      opacity: .46;
+      transition: transform .35s ease, opacity .25s ease;
+    }
+    .nav-btn:hover img { transform: scale(1.04); opacity: .38; }
+    .nav-btn-label {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      align-content: end;
+      gap: 8px;
+      padding: 20px;
+      color: white;
+      background: linear-gradient(transparent, rgba(20, 67, 59, .82));
+    }
+    .nav-btn-sub {
+      color: rgba(255,255,255,.62);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .nav-btn-title {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    .nav-btn-arrow {
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .section-body {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 72px;
+    }
+    .section-banner {
+      position: relative;
+      height: 230px;
+      overflow: hidden;
+      margin-bottom: 22px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: var(--green);
+    }
+    .section-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .56;
+    }
+    .section-banner-text {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      align-content: center;
+      padding: 30px;
+      color: white;
+      background: linear-gradient(90deg, rgba(20, 67, 59, .78), rgba(20, 67, 59, .22));
+    }
+    .section-banner-text h2 {
+      margin: 0;
+      font-size: clamp(30px, 6vw, 48px);
+      line-height: 1.15;
+    }
+    .section-banner-text p {
+      margin: 10px 0 0;
+      color: rgba(255,255,255,.74);
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .top-actions, .module-head, .row, .quick-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .top-actions {
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .quick-actions { flex-wrap: wrap; justify-content: flex-start; }
+
+    .module {
+      padding: 22px;
+      border: 1px solid rgba(222, 219, 210, .75);
+    }
+    .module-head { margin-bottom: 16px; }
+    h2, h3 { margin: 0; line-height: 1.25; }
+    .subtle {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field { display: grid; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    input, select, textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      outline: 0;
+      background: #f2efe7;
+    }
+    textarea {
+      min-height: 92px;
+      padding-top: 12px;
+      resize: vertical;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--violet);
+      box-shadow: 0 0 0 3px rgba(139, 127, 209, .15);
+      background: white;
+    }
+    .pill-btn, .primary-btn, .back-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: 0 1px 0 rgba(0,0,0,.05), inset 0 0 0 1px var(--line);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .primary-btn {
+      color: white;
+      background: var(--green);
+      box-shadow: none;
+    }
+    .danger-btn {
+      color: white;
+      background: var(--coral);
+      box-shadow: none;
+    }
+    .back-btn {
+      color: var(--green-dark);
+      min-height: 46px;
+      padding-inline: 22px;
+    }
+    .bottom-back {
+      text-align: center;
+      padding: 34px 0 0;
+    }
+    .tabs, .segment {
+      display: inline-grid;
+      grid-auto-flow: column;
+      gap: 2px;
+      padding: 3px;
+      border-radius: 999px;
+      background: #ebe9e2;
+    }
+    .tab, .seg {
+      min-height: 34px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: transparent;
+      font-weight: 900;
+    }
+    .tab.active, .seg.active {
+      background: white;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .list-card {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid rgba(222,219,210,.75);
+      box-shadow: 0 8px 20px rgba(34,38,31,.07);
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .list-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(40, 122, 107, .35);
+    }
+    .card-flags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .row-main {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .row-main strong, .row-main span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: var(--green-dark);
+      background: var(--mint);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .badge.gold {
+      color: #6c5a13;
+      background: #f1e7b9;
+    }
+    .check {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      accent-color: var(--green);
+    }
+    .muted { color: var(--muted); }
+    .mini-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .tiny {
+      min-height: 32px;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      background: #f2efe7;
+      font-weight: 900;
+    }
+    .chart-wrap {
+      display: grid;
+      grid-template-columns: minmax(180px, 270px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+    .donut {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .donut::after {
+      content: attr(data-total);
+      width: 48%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: 50%;
+      background: var(--paper);
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 900;
+      white-space: pre-line;
+    }
+    .category-list {
+      display: grid;
+      border-top: 1px solid var(--line);
+    }
+    .category-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+    .empty {
+      padding: 18px;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      text-align: center;
+      font-weight: 900;
+    }
+    .source-card {
+      display: grid;
+      gap: 16px;
+      padding: 18px;
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(222,219,210,.75);
+    }
+    .source-image-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+    .source-image {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .open-original-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      min-height: 58px;
+      padding: 0 28px;
+      color: white;
+      background: rgba(31, 102, 89, .94);
+      border: 1px solid rgba(255,255,255,.55);
+      box-shadow: 0 14px 36px rgba(0,0,0,.24);
+      backdrop-filter: blur(6px);
+    }
+    .detail-title {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .detail-title .badge {
+      width: fit-content;
+    }
+    .detail-preview {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .detail-preview img {
+      width: min(100%, 520px);
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+    }
+    .detail-link {
+      color: var(--green-dark);
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+    .footer {
+      padding: 44px 24px 56px;
+      text-align: center;
+      color: rgba(22,24,29,.42);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 2;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 20;
+      transform: translateX(-50%) translateY(16px);
+      padding: 12px 16px;
+      color: white;
+      background: rgba(22, 24, 29, .92);
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .22s ease;
+      font-weight: 900;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media print {
+      .home-hero, .nav-grid, .top-actions, form, .mini-actions, .tabs, .bottom-back, .footer { display: none !important; }
+      .view { display: block !important; }
+      .section-banner { height: auto; box-shadow: none; }
+      .section-banner img { display: none; }
+      .section-banner-text { position: static; color: var(--ink); background: none; padding: 0; }
+      .module, .metric, .list-card { box-shadow: none; break-inside: avoid; }
+      body { background: white; }
+    }
+    @media (max-width: 780px) {
+      .dashboard, .nav-grid, .form-grid, .chart-wrap { grid-template-columns: 1fr; }
+      .nav-btn { min-height: 142px; }
+      .module-head, .row, .top-actions { align-items: stretch; flex-direction: column; }
+      .tabs, .segment { width: 100%; grid-auto-columns: 1fr; }
+      .tab, .seg { padding: 0 8px; }
+      .quick-actions > *, .mini-actions > * { flex: 1; }
+      .section-banner { height: 190px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="view-home" class="view active">
+    <div class="home-hero">
+      <div class="hero-inner">
+        <p class="brand-kicker">TRAVEL PLANNER</p>
+        <h1 class="brand-title">汶豆油<br>旅遊助手</h1>
+        <p class="hero-tagline">出發前整理待辦，旅途中查航班、住宿、行程，回家後看花費。資料存在這台電腦的瀏覽器裡。</p>
+        <label class="trip-switch" aria-label="旅程名稱">
+          <span>✈️</span>
+          <input id="tripName" placeholder="我的旅行">
+          <span>▾</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="home-body">
+      <div class="top-actions">
+        <div>
+          <div class="subtle" id="todayText">今天</div>
+          <h2 id="pageTitle">我的旅行</h2>
+        </div>
+        <div class="quick-actions">
+          <button class="pill-btn" id="seedBtn" type="button">↺ 載入 1150124 北海道行程</button>
+          <button class="pill-btn" id="printBtn" type="button">⎙ 輸出 PDF</button>
+        </div>
+      </div>
+
+      <div class="dashboard">
+        <div class="metric green"><span>總預估花費</span><strong id="metricTotal">NT$0</strong></div>
+        <div class="metric"><span>待辦完成</span><strong id="metricTodo">0%</strong></div>
+        <div class="metric"><span>旅行天數</span><strong id="metricDays">0</strong></div>
+        <div class="metric"><span>已排景點</span><strong id="metricStops">0</strong></div>
+      </div>
+
+      <div class="section-divider"><span>功能入口</span></div>
+      <div class="nav-grid">
+        <button class="nav-btn" onclick="showSection('overview')" type="button">
+          <img src="2026_北海道家族旅行/1150124北海道自由行-圖.jpg" alt="">
+          <div class="nav-btn-label"><div class="nav-btn-sub">Overview</div><div class="nav-btn-title">行程簡介</div><div class="nav-btn-arrow">→ 查看總圖</div></div>
+        </button>
+        <button class="nav-btn" onclick="showSection('todos')" type="button">
+          <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=900&q=80" alt="">
+          <div class="nav-btn-label"><div class="nav-btn-sub">Checklist</div><div class="nav-btn-title">待辦與核對</div><div class="nav-btn-arrow">→ 打開待辦</div></div>
+        </button>
+        <button class="nav-btn" onclick="showSection('flights')" type="button">
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80" alt="">
+          <div class="nav-btn-label"><div class="nav-btn-sub">Flight</div><div class="nav-btn-title">航班資訊</div><div class="nav-btn-arrow">→ 查看航班</div></div>
+        </button>
+        <button class="nav-btn" onclick="showSection('hotels')" type="button">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80" alt="">
+          <div class="nav-btn-label"><div class="nav-btn-sub">Stay</div><div class="nav-btn-title">住宿飯店</div><div class="nav-btn-arrow">→ 管理住宿</div></div>
+        </button>
+        <button class="nav-btn" onclick="showSection('itinerary')" type="button">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="">
+          <div class="nav-btn-label"><div class="nav-btn-sub">Schedule</div><div class="nav-btn-title">景點行程</div><div class="nav-btn-arrow">→ 查看行程</div></div>
+        </button>
+        <button class="nav-btn" onclick="showSection('expenses')" type="button">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80" alt="">
+          <div class="nav-btn-label"><div class="nav-btn-sub">Budget</div><div class="nav-btn-title">花費與統計</div><div class="nav-btn-arrow">→ 查看花費</div></div>
+        </button>
+        <button class="nav-btn" onclick="showSection('backup')" type="button">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="">
+          <div class="nav-btn-label"><div class="nav-btn-sub">Backup</div><div class="nav-btn-title">備份與匯出</div><div class="nav-btn-arrow">→ 匯出資料</div></div>
+        </button>
+      </div>
+    </div>
+    <div class="footer">汶豆油旅遊助手 · 2026 北海道自由行資料已內建</div>
+  </div>
+
+  <div id="view-overview" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="2026_北海道家族旅行/1150124北海道自由行-圖.jpg" alt="">
+        <div class="section-banner-text"><h2>行程簡介</h2><p>1150124 北海道自由行 · Overview</p></div>
+      </div>
+      <div class="top-actions">
+        <button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button>
+      </div>
+      <section class="source-card">
+        <div>
+          <h2>1150124北海道自由行-圖</h2>
+        </div>
+        <div class="source-image-wrap">
+          <img class="source-image" src="2026_北海道家族旅行/1150124北海道自由行-圖.jpg" alt="1150124北海道自由行圖">
+          <a class="pill-btn open-original-center" href="2026_北海道家族旅行/1150124北海道自由行-圖.jpg" target="_blank" rel="noopener">打開原圖</a>
+        </div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-todos" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2>待辦與核對</h2><p>Checklist · Before Departure</p></div>
+      </div>
+      <div class="top-actions"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button><button class="pill-btn" id="clearDoneBtn" type="button">清除已完成待辦</button></div>
+      <section class="module">
+        <div class="module-head">
+          <div><h2>待辦事項</h2><p class="subtle">出發前要確認的事集中放這裡。</p></div>
+          <div class="segment" role="group" aria-label="待辦篩選">
+            <button class="seg active" data-filter="all" type="button">全部</button>
+            <button class="seg" data-filter="open" type="button">未完成</button>
+            <button class="seg" data-filter="done" type="button">完成</button>
+          </div>
+        </div>
+        <form id="todoForm" class="form-grid">
+          <div class="field"><label for="todoText">事項</label><input id="todoText" required placeholder="例：訂 JR 票、確認護照效期"></div>
+          <div class="field"><label for="todoDue">期限</label><input id="todoDue" type="date"></div>
+          <div class="field full"><button class="primary-btn" type="submit">＋ 新增待辦</button></div>
+        </form>
+        <div class="list" id="todoList"></div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-flights" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2>航班資訊</h2><p>Flight · Airport · Time</p></div>
+      </div>
+      <div class="top-actions"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+      <section class="module">
+        <div class="module-head"><div><h2>航班資訊管理</h2><p class="subtle">去程、回程、轉機都可以分開記。</p></div></div>
+        <form id="flightForm" class="form-grid">
+          <div class="field"><label for="flightNo">航班</label><input id="flightNo" required placeholder="例：FD9242"></div>
+          <div class="field"><label for="flightDate">日期</label><input id="flightDate" type="date" required></div>
+          <div class="field"><label for="flightFrom">出發</label><input id="flightFrom" placeholder="例：TPE 桃園"></div>
+          <div class="field"><label for="flightTo">抵達</label><input id="flightTo" placeholder="例：CTS 新千歲"></div>
+          <div class="field"><label for="flightDepart">起飛</label><input id="flightDepart" type="time"></div>
+          <div class="field"><label for="flightArrive">抵達時間</label><input id="flightArrive" type="time"></div>
+          <div class="field full"><button class="primary-btn" type="submit">＋ 新增航班</button></div>
+        </form>
+        <div class="list" id="flightList"></div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-hotels" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2>住宿飯店</h2><p>Stay · Check-in · Address</p></div>
+      </div>
+      <div class="top-actions"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+      <section class="module">
+        <div class="module-head"><div><h2>住宿飯店管理</h2><p class="subtle">修改入住日期時，行程天數會一起跟著整理。</p></div></div>
+        <form id="hotelForm" class="form-grid">
+          <div class="field"><label for="hotelDay">Day</label><input id="hotelDay" type="number" min="1" value="1"></div>
+          <div class="field"><label for="hotelDate">入住日期</label><input id="hotelDate" type="date" required></div>
+          <div class="field full"><label for="hotelName">飯店名稱</label><input id="hotelName" required placeholder="例：Cross Hotel Tokyo"></div>
+          <div class="field"><label for="hotelPhone">電話</label><input id="hotelPhone" placeholder="選填"></div>
+          <div class="field"><label for="hotelAddress">地址</label><input id="hotelAddress" placeholder="選填"></div>
+          <div class="field full"><button class="primary-btn" type="submit">＋ 新增住宿</button></div>
+        </form>
+        <div class="list" id="hotelList"></div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-itinerary" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2>景點行程</h2><p>Schedule · Day by Day</p></div>
+      </div>
+      <div class="top-actions"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+      <section class="module">
+        <div class="module-head"><div><h2>景點行程規劃</h2><p class="subtle">不用寫得很正式，先把想去的點排進每天即可。</p></div></div>
+        <form id="stopForm" class="form-grid">
+          <div class="field"><label for="stopDay">Day</label><input id="stopDay" type="number" min="1" value="1"></div>
+          <div class="field"><label for="stopTime">時間</label><input id="stopTime" type="time"></div>
+          <div class="field"><label for="stopPlace">地點</label><input id="stopPlace" required placeholder="例：小樽運河"></div>
+          <div class="field"><label for="stopType">類型</label><select id="stopType"><option>景點</option><option>餐飲</option><option>交通</option><option>購物</option><option>飯店</option><option>其他</option></select></div>
+          <div class="field full"><label for="stopNote">備註</label><textarea id="stopNote" placeholder="例：想拍照、要先查營業時間、可能下雪備案"></textarea></div>
+          <div class="field full"><button class="primary-btn" type="submit">＋ 新增行程</button></div>
+        </form>
+        <div class="list" id="stopList"></div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-expenses" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2>花費與統計</h2><p>Budget · Exchange Rate · Summary</p></div>
+      </div>
+      <div class="top-actions"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+      <section class="module">
+        <div class="module-head"><div><h2>花費紀錄與換算</h2><p class="subtle">匯率可手動改，統計會即時更新。</p></div></div>
+        <form id="rateForm" class="form-grid">
+          <div class="field"><label for="baseCurrency">基準幣別</label><select id="baseCurrency"><option value="TWD">TWD 台幣</option></select></div>
+          <div class="field"><label for="jpyRate">JPY 匯率</label><input id="jpyRate" type="number" min="0" step="0.0001" value="0.1976"></div>
+          <div class="field"><label for="usdRate">USD 匯率</label><input id="usdRate" type="number" min="0" step="0.01" value="31.5"></div>
+          <div class="field"><label for="krwRate">KRW 匯率</label><input id="krwRate" type="number" min="0" step="0.0001" value="0.0213"></div>
+        </form>
+        <form id="expenseForm" class="form-grid" style="margin-top:14px">
+          <div class="field"><label for="expenseDate">日期</label><input id="expenseDate" type="date"></div>
+          <div class="field"><label for="expensePlace">地點</label><input id="expensePlace" placeholder="例：環球影城、難波"></div>
+          <div class="field full"><label for="expenseName">項目名稱 *</label><input id="expenseName" required placeholder="例：晚餐、門票、租車"></div>
+          <div class="field"><label for="expenseCategory">類別</label><select id="expenseCategory"><option>餐飲</option><option>機票</option><option>其他交通費</option><option>住宿</option><option>門票 / 娛樂</option><option>購物</option><option>保險及醫療</option><option>通訊</option><option>其他</option></select></div>
+          <div class="field"><label for="expenseCurrency">幣別</label><select id="expenseCurrency"><option value="JPY">🇯🇵 JPY</option><option value="TWD">🇹🇼 TWD</option><option value="USD">🇺🇸 USD</option><option value="KRW">🇰🇷 KRW</option></select></div>
+          <div class="field full"><label for="expenseAmount">金額</label><input id="expenseAmount" type="number" min="0" step="1" value="0"></div>
+          <div class="field full"><button class="primary-btn" type="submit">＋ 新增支出</button></div>
+        </form>
+        <div class="list" id="expenseList"></div>
+      </section>
+      <section class="module" style="margin-top:18px">
+        <div class="module-head">
+          <div><h2>花費統計</h2><p class="subtle">依目前所有支出自動加總。</p></div>
+          <div class="tabs"><button class="tab active" data-stat="trip" type="button">單趟</button><button class="tab" data-stat="all" type="button">所有</button><button class="tab" data-stat="custom" type="button">自訂</button></div>
+        </div>
+        <div class="chart-wrap">
+          <div class="donut" id="donut" data-total="總計&#10;NT$0"></div>
+          <div class="category-list" id="categoryList"></div>
+        </div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-backup" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2>備份與匯出</h2><p>JSON · CSV · PDF</p></div>
+      </div>
+      <div class="top-actions"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+      <section class="module">
+        <div class="module-head"><div><h2>資料備份與還原</h2><p class="subtle">資料存在這台電腦的瀏覽器。換瀏覽器前先匯出。</p></div></div>
+        <div class="quick-actions">
+          <button class="pill-btn" id="exportBtn" type="button">⇩ 匯出 JSON</button>
+          <button class="pill-btn" id="exportCsvBtn" type="button">⇩ 匯出花費 CSV</button>
+          <label class="pill-btn" for="importFile">⇧ 匯入 JSON</label>
+          <input id="importFile" type="file" accept="application/json" style="display:none">
+          <button class="pill-btn danger-btn" id="resetBtn" type="button">清空資料</button>
+        </div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-detail" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2 id="detailPageTitle">詳細資料</h2><p id="detailPageSub">Detail · Link · Image</p></div>
+      </div>
+      <div class="top-actions">
+        <button class="back-btn" id="detailBackBtn" type="button">← 返回上一頁</button>
+      </div>
+      <section class="module">
+        <div class="detail-title">
+          <span class="badge" id="detailKind">資料</span>
+          <h2 id="detailItemTitle">項目名稱</h2>
+          <p class="subtle">這裡可以補充詳細資料、網址、圖片路徑。圖片可用網路圖片網址，也可填同資料夾相對路徑。</p>
+        </div>
+        <form id="detailForm" class="form-grid">
+          <div class="field full">
+            <label for="detailSummary">補充說明</label>
+            <input id="detailSummary" placeholder="例：集合地點、訂房編號、注意事項">
+          </div>
+          <div class="field full">
+            <label for="detailLink">連結</label>
+            <input id="detailLink" placeholder="例：https://maps.google.com/...">
+          </div>
+          <div class="field full">
+            <label for="detailImage">圖片路徑或網址</label>
+            <input id="detailImage" placeholder="例：2026_北海道家族旅行/照片.jpg">
+          </div>
+          <div class="field full">
+            <label for="detailNotes">詳細備註</label>
+            <textarea id="detailNotes" placeholder="可以放訂位資料、交通提醒、票券資訊、備案。"></textarea>
+          </div>
+          <div class="field full">
+            <button class="primary-btn" type="submit">儲存詳細資料</button>
+          </div>
+        </form>
+        <div class="detail-preview" id="detailPreview"></div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" id="detailBottomBackBtn" type="button">← 返回上一頁</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "kinluTravelPlannerPro.v1";
+    const colors = ["#287a6b", "#c8ad45", "#8b7fd1", "#dd694f", "#79a75a", "#b9bdc3", "#4f91b3", "#b06a9d", "#7f8a42"];
+    const categories = ["餐飲", "機票", "其他交通費", "住宿", "門票 / 娛樂", "購物", "保險及醫療", "通訊", "其他"];
+    const icons = {
+      "餐飲": "🍜",
+      "機票": "✈️",
+      "其他交通費": "🚐",
+      "住宿": "🏨",
+      "門票 / 娛樂": "🎡",
+      "購物": "🛍️",
+      "保險及醫療": "🏥",
+      "通訊": "📶",
+      "其他": "📦",
+      "景點": "🗺️",
+      "交通": "🚐",
+      "飯店": "🏨"
+    };
+
+    const sampleData = {
+      tripName: "2026 冬 北海道漫遊11日",
+      rates: { TWD: 1, JPY: 0.1976, USD: 31.5, KRW: 0.0213 },
+      todos: [
+        { id: crypto.randomUUID(), text: "確認護照效期", due: "2026-01-05", done: false },
+        { id: crypto.randomUUID(), text: "列印保險、租車、飯店確認資料", due: "2026-01-20", done: false },
+        { id: crypto.randomUUID(), text: "整理雪地衣物、暖暖包、常備藥", due: "2026-01-22", done: false },
+        { id: crypto.randomUUID(), text: "確認租車取車資料與雪地駕駛備案", due: "2026-01-23", done: false },
+        { id: crypto.randomUUID(), text: "破冰船行程確認集合地與保暖裝備", due: "2026-01-30", done: false },
+        { id: crypto.randomUUID(), text: "回程前檢查伴手禮是否買齊", due: "2026-02-02", done: false }
+      ],
+      flights: [
+        { id: crypto.randomUUID(), no: "FD9242", date: "2026-01-24", from: "TPE 台灣桃園國際機場 T1", to: "CTS 新千歲機場", depart: "07:25", arrive: "12:00", note: "泰國亞航，經濟艙，空中巴士 A320-212，中型，航程 3小時35分。" },
+        { id: crypto.randomUUID(), no: "FD243", date: "2026-02-03", from: "CTS 新千歲機場", to: "TPE 台灣桃園國際機場 T1", depart: "13:55", arrive: "17:55", note: "泰國亞航，經濟艙，空中巴士 A320-212，中型，航程 5小時。" }
+      ],
+      hotels: [
+        { id: crypto.randomUUID(), day: 1, date: "2026-01-24", name: "第一瀧本館 (溫泉飯店)", phone: "", address: "登別" },
+        { id: crypto.randomUUID(), day: 2, date: "2026-01-25", name: "第一瀧本館 (溫泉飯店)", phone: "", address: "登別" },
+        { id: crypto.randomUUID(), day: 3, date: "2026-01-26", name: "Hotel Nord Otaru", phone: "", address: "小樽" },
+        { id: crypto.randomUUID(), day: 4, date: "2026-01-27", name: "富良野高地酒店 (溫泉)", phone: "", address: "富良野" },
+        { id: crypto.randomUUID(), day: 5, date: "2026-01-28", name: "富良野高地酒店 (溫泉)", phone: "", address: "富良野" },
+        { id: crypto.randomUUID(), day: 6, date: "2026-01-29", name: "層雲峽朝陽度假酒店", phone: "", address: "層雲峽" },
+        { id: crypto.randomUUID(), day: 7, date: "2026-01-30", name: "札幌王子大飯店", phone: "", address: "札幌" },
+        { id: crypto.randomUUID(), day: 8, date: "2026-01-31", name: "札幌王子大飯店", phone: "", address: "札幌" },
+        { id: crypto.randomUUID(), day: 9, date: "2026-02-01", name: "札幌王子大飯店", phone: "", address: "札幌" },
+        { id: crypto.randomUUID(), day: 10, date: "2026-02-02", name: "札幌王子大飯店", phone: "", address: "札幌" }
+      ],
+      stops: [
+        { id: crypto.randomUUID(), day: 1, time: "12:00", place: "抵達新千歲", type: "交通", note: "交通：機場租車自駕。入境與租車若延遲，地獄谷可視情況改明日。" },
+        { id: crypto.randomUUID(), day: 1, time: "13:30", place: "辦理租車", type: "交通", note: "確認雪胎、ETC、導航與還車規則。" },
+        { id: crypto.randomUUID(), day: 1, time: "15:00", place: "登別地獄谷", type: "景點", note: "日景加夜景。" },
+        { id: crypto.randomUUID(), day: 1, time: "17:30", place: "第一瀧本館 Check-in", type: "飯店", note: "溫泉飯店。" },
+        { id: crypto.randomUUID(), day: 1, time: "18:00", place: "登別溫泉街散策、溫泉市場晚餐", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 1, time: "19:00", place: "享受飯店日歸溫泉", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 2, time: "09:00", place: "有珠山纜車 / 洞爺湖", type: "景點", note: "交通：自駕。若天氣不好就取消洞爺湖。" },
+        { id: crypto.randomUUID(), day: 2, time: "10:00", place: "筒倉展望台", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 2, time: "11:00", place: "望羊蹄漢堡排套餐", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 2, time: "12:30", place: "登別伊達時代村", type: "景點", note: "忍者秀 / 武士秀。" },
+        { id: crypto.randomUUID(), day: 2, time: "18:30", place: "溫泉街散策、溫泉市場晚餐", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 2, time: "19:00", place: "享受飯店日歸溫泉", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 3, time: "09:00", place: "前往小樽堺町通", type: "交通", note: "交通：自駕。留肚子吃甜點。" },
+        { id: crypto.randomUUID(), day: 3, time: "12:00", place: "午餐：万次郎", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 3, time: "13:00", place: "北一硝子館、音樂盒堂", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 3, time: "14:00", place: "甜點巡禮", type: "餐飲", note: "北菓樓 / 六花亭 / LeTao。" },
+        { id: crypto.randomUUID(), day: 3, time: "15:00", place: "Hotel Nord Otaru Check-in & 停車", type: "飯店", note: "" },
+        { id: crypto.randomUUID(), day: 3, time: "15:30", place: "小樽運河散策", type: "景點", note: "等待點燈。" },
+        { id: crypto.randomUUID(), day: 3, time: "18:00", place: "晚餐：若鶏時代 或 出拔小路", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 3, time: "19:30", place: "天狗山夜景", type: "景點", note: "視天氣前往。" },
+        { id: crypto.randomUUID(), day: 4, time: "09:00", place: "小樽運河散策", type: "景點", note: "交通：自駕，山路小心。移動距離較長，注意雪地行車安全。" },
+        { id: crypto.randomUUID(), day: 4, time: "12:00", place: "芦別休息站", type: "餐飲", note: "含多湯拉麵。" },
+        { id: crypto.randomUUID(), day: 4, time: "12:30", place: "北海道天徳大観音", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 4, time: "15:00", place: "富良野高地酒店 Check-in", type: "飯店", note: "溫泉住宿。" },
+        { id: crypto.randomUUID(), day: 4, time: "16:30", place: "森林精靈露台", type: "景點", note: "點燈超美。" },
+        { id: crypto.randomUUID(), day: 4, time: "18:20", place: "飯店晚餐 & 溫泉", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 5, time: "09:00", place: "富良野滑雪場", type: "景點", note: "交通：當地移動。滑好滑滿，享受粉雪的一天。" },
+        { id: crypto.randomUUID(), day: 5, time: "16:30", place: "森林精靈露台", type: "景點", note: "若昨天沒去，今天補。" },
+        { id: crypto.randomUUID(), day: 5, time: "18:20", place: "飯店晚餐 & 舒緩肌肉", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 6, time: "08:00", place: "準時出發", type: "交通", note: "交通：自駕。企鵝散步不等人，務必掌握時間。" },
+        { id: crypto.randomUUID(), day: 6, time: "09:00", place: "美瑛聖誕樹", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 6, time: "09:30", place: "白鬚瀑布", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 6, time: "10:30", place: "旭山動物園", type: "景點", note: "11:00 企鵝散步。" },
+        { id: crypto.randomUUID(), day: 6, time: "13:30", place: "旭川拉麵村", type: "餐飲", note: "午餐。" },
+        { id: crypto.randomUUID(), day: 6, time: "16:00", place: "銀河 / 流星瀑布", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 6, time: "17:00", place: "層雲峽朝陽度假酒店 Check-in & 晚餐", type: "飯店", note: "" },
+        { id: crypto.randomUUID(), day: 6, time: "18:40", place: "層雲峽冰瀑祭", type: "景點", note: "極寒體驗。" },
+        { id: crypto.randomUUID(), day: 7, time: "09:00", place: "出發札幌", type: "交通", note: "交通：自駕後還車。先至飯店寄行李。" },
+        { id: crypto.randomUUID(), day: 7, time: "13:00", place: "加油 & 爸爸還車 / 其他人逛地下街", type: "交通", note: "" },
+        { id: crypto.randomUUID(), day: 7, time: "14:00", place: "電視塔、大通公園、計時台", type: "景點", note: "還車後就是市區行程。" },
+        { id: crypto.randomUUID(), day: 7, time: "17:00", place: "札幌王子大飯店 Check-in", type: "飯店", note: "" },
+        { id: crypto.randomUUID(), day: 7, time: "18:00", place: "晚餐：増田烏龍麵", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 8, time: "09:00", place: "中央批發市場", type: "餐飲", note: "交通：地鐵。早餐 / 早午餐。" },
+        { id: crypto.randomUUID(), day: 8, time: "11:00", place: "白色戀人公園", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 8, time: "12:00", place: "午餐：円山 Picante 湯咖哩", type: "餐飲", note: "湯咖哩名店可能排隊，建議提早到。" },
+        { id: crypto.randomUUID(), day: 8, time: "13:00", place: "北海道神宮", type: "景點", note: "判官餅。" },
+        { id: crypto.randomUUID(), day: 8, time: "15:30", place: "六花亭 圓山店", type: "餐飲", note: "下午茶。" },
+        { id: crypto.randomUUID(), day: 8, time: "17:00", place: "狸小路商店街", type: "購物", note: "晚餐加逛街。" },
+        { id: crypto.randomUUID(), day: 9, time: "07:00", place: "全日空皇冠假日酒店搭車", type: "交通", note: "交通：遊覽車。破冰之旅要穿暖一點。" },
+        { id: crypto.randomUUID(), day: 9, time: "11:30", place: "鄂霍次克塔", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 9, time: "12:30", place: "破冰船 GARINKO GO III IMERU", type: "景點", note: "" },
+        { id: crypto.randomUUID(), day: 9, time: "19:00", place: "薄野商圈 & 晚餐", type: "餐飲", note: "成吉思汗烤肉。" },
+        { id: crypto.randomUUID(), day: 10, time: "10:00", place: "頭大佛殿、モアイ像", type: "景點", note: "交通：地鐵。檢查伴手禮是否買齊。" },
+        { id: crypto.randomUUID(), day: 10, time: "12:00", place: "地下街午餐", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 10, time: "13:30", place: "大通公園散策", type: "景點", note: "看雪祭。" },
+        { id: crypto.randomUUID(), day: 10, time: "15:00", place: "札幌地下街", type: "購物", note: "最後衝刺。" },
+        { id: crypto.randomUUID(), day: 10, time: "18:00", place: "晚餐：札幌車站周邊", type: "餐飲", note: "" },
+        { id: crypto.randomUUID(), day: 11, time: "08:00", place: "飯店 Check-out，前往機場", type: "交通", note: "交通：JR 機場快線。國內線航廈比較好逛，記得預留時間。" },
+        { id: crypto.randomUUID(), day: 11, time: "09:30", place: "新千歲機場", type: "購物", note: "逛街 / 補貨 / 拉麵道場。" },
+        { id: crypto.randomUUID(), day: 11, time: "14:00", place: "起飛", type: "交通", note: "" },
+        { id: crypto.randomUUID(), day: 11, time: "18:00", place: "抵達桃園", type: "交通", note: "目的地：溫暖的家。" }
+      ],
+      expenses: [
+        { id: crypto.randomUUID(), date: "2025-08-15", place: "四人小計", name: "機票、機票手續費、飛機餐", category: "機票", currency: "TWD", amount: 56742 },
+        { id: crypto.randomUUID(), date: "2026-01-30", place: "四人小計", name: "住宿總計", category: "住宿", currency: "TWD", amount: 80707 },
+        { id: crypto.randomUUID(), date: "2026-01-29", place: "四人小計", name: "行程門票與活動總計", category: "門票 / 娛樂", currency: "TWD", amount: 32415 },
+        { id: crypto.randomUUID(), date: "2026-02-03", place: "四人小計", name: "日本租車、接駁、加油、停車、過路費", category: "其他交通費", currency: "TWD", amount: 32601 },
+        { id: crypto.randomUUID(), date: "2026-02-03", place: "四人小計", name: "共用費用：吃、車票、門票", category: "餐飲", currency: "TWD", amount: 30477 },
+        { id: crypto.randomUUID(), date: "2025-12-19", place: "四人小計", name: "旅遊平安險", category: "保險及醫療", currency: "TWD", amount: 1984 },
+        { id: crypto.randomUUID(), date: "2026-01-20", place: "四人小計", name: "網卡", category: "通訊", currency: "TWD", amount: 4190 }
+      ]
+    };
+
+    let state = loadState();
+    let todoFilter = "all";
+    let currentDetail = null;
+    let previousDetailView = "home";
+    const $ = (id) => document.getElementById(id);
+
+    function showSection(name) {
+      document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+      $("view-" + name).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      render();
+    }
+
+    function showHome() {
+      document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+      $("view-home").classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      render();
+    }
+
+    function showDetail(collection, id) {
+      const item = state[collection]?.find((entry) => entry.id === id);
+      if (!item) return;
+      const active = document.querySelector(".view.active");
+      previousDetailView = active ? active.id.replace("view-", "") : "home";
+      currentDetail = { collection, id };
+      document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+      $("view-detail").classList.add("active");
+      renderDetail();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function backFromDetail() {
+      showSection(previousDetailView || "home");
+    }
+
+    function defaultState() {
+      return {
+        tripName: "我的旅行",
+        rates: { TWD: 1, JPY: 0.1976, USD: 31.5, KRW: 0.0213 },
+        todos: [],
+        flights: [],
+        hotels: [],
+        stops: [],
+        expenses: []
+      };
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return saved ? { ...defaultState(), ...saved, rates: { ...defaultState().rates, ...(saved.rates || {}) } } : structuredClone(sampleData);
+      } catch {
+        return structuredClone(sampleData);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      render();
+    }
+
+    function money(value) {
+      return "NT$" + Math.round(value).toLocaleString("zh-TW");
+    }
+
+    function convert(amount, currency) {
+      return Number(amount || 0) * Number(state.rates[currency] || 1);
+    }
+
+    function showToast(text) {
+      const toast = $("toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function escapeHtml(text) {
+      return String(text ?? "").replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[ch]));
+    }
+
+    function totalExpense() {
+      return state.expenses.reduce((sum, item) => sum + convert(item.amount, item.currency), 0);
+    }
+
+    function tripDays() {
+      const days = [
+        ...state.stops.map((x) => Number(x.day || 0)),
+        ...state.hotels.map((x) => Number(x.day || 0))
+      ].filter(Boolean);
+      if (days.length) return Math.max(...days);
+      const travelDates = [
+        ...state.flights.map((x) => x.date),
+        ...state.hotels.map((x) => x.date)
+      ].filter(Boolean).sort();
+      if (!travelDates.length) return 0;
+      const first = new Date(travelDates[0]);
+      const last = new Date(travelDates[travelDates.length - 1]);
+      return Math.max(1, Math.round((last - first) / 86400000) + 1);
+    }
+
+    function render() {
+      $("tripName").value = state.tripName;
+      $("pageTitle").textContent = state.tripName;
+      $("todayText").textContent = new Intl.DateTimeFormat("zh-TW", { dateStyle: "full" }).format(new Date());
+      $("jpyRate").value = state.rates.JPY;
+      $("usdRate").value = state.rates.USD;
+      $("krwRate").value = state.rates.KRW;
+
+      const done = state.todos.filter((x) => x.done).length;
+      const todoPercent = state.todos.length ? Math.round(done / state.todos.length * 100) : 0;
+      $("metricTotal").textContent = money(totalExpense());
+      $("metricTodo").textContent = todoPercent + "%";
+      $("metricDays").textContent = tripDays();
+      $("metricStops").textContent = state.stops.filter((item) => item.type === "景點").length;
+
+      renderTodos();
+      renderFlights();
+      renderHotels();
+      renderStops();
+      renderExpenses();
+      renderStats();
+      renderDetail();
+    }
+
+    function cardEmpty(text) {
+      return `<div class="empty">${escapeHtml(text)}</div>`;
+    }
+
+    function itemTitle(collection, item) {
+      if (collection === "todos") return item.text;
+      if (collection === "flights") return item.no;
+      if (collection === "hotels") return item.name;
+      if (collection === "stops") return item.place;
+      if (collection === "expenses") return item.name;
+      return "詳細資料";
+    }
+
+    function collectionLabel(collection) {
+      return {
+        todos: "待辦",
+        flights: "航班",
+        hotels: "住宿",
+        stops: "行程",
+        expenses: "花費"
+      }[collection] || "資料";
+    }
+
+    function detailFlags(item) {
+      const detail = item.detail || {};
+      const flags = [];
+      if (detail.summary || detail.notes) flags.push("有詳細資料");
+      if (detail.link) flags.push("有連結");
+      if (detail.image) flags.push("有圖片");
+      return flags.length ? `<div class="card-flags">${flags.map((flag) => `<span>＋ ${escapeHtml(flag)}</span>`).join("")}</div>` : `<div class="card-flags"><span>點開補資料、連結、圖片</span></div>`;
+    }
+
+    function renderTodos() {
+      const items = state.todos.filter((item) => todoFilter === "all" || (todoFilter === "done" ? item.done : !item.done));
+      $("todoList").innerHTML = items.length ? items.map((item) => `
+        <div class="list-card" data-open-detail="todos:${item.id}">
+          <div class="row">
+            <label class="row-main">
+              <input class="check" type="checkbox" data-check-todo="${item.id}" ${item.done ? "checked" : ""}>
+              <strong style="${item.done ? "text-decoration:line-through;color:var(--muted)" : ""}">${escapeHtml(item.text)}</strong>
+            </label>
+            <div class="mini-actions">
+              ${item.due ? `<span class="badge gold">${escapeHtml(item.due)}</span>` : ""}
+              <button class="tiny" data-delete="todos:${item.id}" type="button">刪除</button>
+            </div>
+          </div>
+          ${detailFlags(item)}
+        </div>
+      `).join("") : cardEmpty("目前沒有待辦。");
+    }
+
+    function renderFlights() {
+      $("flightList").innerHTML = state.flights.length ? [...state.flights].sort((a, b) => (a.date || "").localeCompare(b.date || "")).map((item) => `
+        <div class="list-card" data-open-detail="flights:${item.id}">
+          <div class="row">
+            <div class="row-main"><span>✈️</span><strong>${escapeHtml(item.no)}</strong><span class="muted">${escapeHtml(item.date)}</span></div>
+            <button class="tiny" data-delete="flights:${item.id}" type="button">刪除</button>
+          </div>
+          <div class="muted">${escapeHtml(item.from)} ${item.depart || ""} → ${escapeHtml(item.to)} ${item.arrive || ""}</div>
+          ${item.note ? `<div>${escapeHtml(item.note)}</div>` : ""}
+          ${detailFlags(item)}
+        </div>
+      `).join("") : cardEmpty("還沒有航班資料。");
+    }
+
+    function renderHotels() {
+      $("hotelList").innerHTML = state.hotels.length ? [...state.hotels].sort((a, b) => Number(a.day) - Number(b.day)).map((item) => `
+        <div class="list-card" data-open-detail="hotels:${item.id}">
+          <div class="row">
+            <div class="row-main"><span>🛏️</span><strong>第 ${escapeHtml(item.day)} 天住宿</strong><span class="badge">Day ${escapeHtml(item.day)}</span></div>
+            <button class="tiny" data-delete="hotels:${item.id}" type="button">刪除</button>
+          </div>
+          <div><strong>${escapeHtml(item.name)}</strong></div>
+          <div class="muted">${escapeHtml(item.date)} ${item.phone ? " · " + escapeHtml(item.phone) : ""}${item.address ? " · " + escapeHtml(item.address) : ""}</div>
+          ${detailFlags(item)}
+        </div>
+      `).join("") : cardEmpty("還沒有住宿資料。");
+    }
+
+    function renderStops() {
+      $("stopList").innerHTML = state.stops.length ? [...state.stops].sort((a, b) => Number(a.day) - Number(b.day) || (a.time || "").localeCompare(b.time || "")).map((item) => `
+        <div class="list-card" data-open-detail="stops:${item.id}">
+          <div class="row">
+            <div class="row-main"><span>${icons[item.type] || "📍"}</span><strong>Day ${escapeHtml(item.day)} · ${escapeHtml(item.place)}</strong></div>
+            <button class="tiny" data-delete="stops:${item.id}" type="button">刪除</button>
+          </div>
+          <div class="muted">${escapeHtml(item.time || "時間未定")} · ${escapeHtml(item.type)}</div>
+          ${item.note ? `<div>${escapeHtml(item.note)}</div>` : ""}
+          ${detailFlags(item)}
+        </div>
+      `).join("") : cardEmpty("還沒有行程景點。");
+    }
+
+    function renderExpenses() {
+      $("expenseList").innerHTML = state.expenses.length ? [...state.expenses].sort((a, b) => (b.date || "").localeCompare(a.date || "")).map((item) => {
+        const twd = convert(item.amount, item.currency);
+        return `
+          <div class="list-card" data-open-detail="expenses:${item.id}">
+            <div class="row">
+              <div class="row-main"><span>${icons[item.category] || "💰"}</span><strong>${escapeHtml(item.name)}</strong></div>
+              <button class="tiny" data-delete="expenses:${item.id}" type="button">刪除</button>
+            </div>
+            <div class="row">
+              <span class="muted">${escapeHtml(item.date || "未設定日期")} · ${escapeHtml(item.place || "未填地點")} · ${escapeHtml(item.category)}</span>
+              <strong>${escapeHtml(item.currency)} ${Number(item.amount || 0).toLocaleString("zh-TW")} / ${money(twd)}</strong>
+            </div>
+            ${detailFlags(item)}
+          </div>
+        `;
+      }).join("") : cardEmpty("還沒有花費紀錄。");
+    }
+
+    function renderStats() {
+      const total = totalExpense();
+      const grouped = categories.map((cat, index) => {
+        const amount = state.expenses.filter((item) => item.category === cat).reduce((sum, item) => sum + convert(item.amount, item.currency), 0);
+        return { cat, amount, color: colors[index % colors.length] };
+      });
+      let angle = 0;
+      const gradient = grouped.filter((x) => x.amount > 0).map((item) => {
+        const size = total ? item.amount / total * 360 : 0;
+        const part = `${item.color} ${angle}deg ${angle + size}deg`;
+        angle += size;
+        return part;
+      }).join(", ");
+      $("donut").style.background = gradient ? `conic-gradient(${gradient})` : "#ebe9e2";
+      $("donut").setAttribute("data-total", `總計\n${money(total)}`);
+      $("categoryList").innerHTML = grouped.map((item) => {
+        const percent = total ? (item.amount / total * 100).toFixed(1) : "0.0";
+        return `
+          <div class="category-item">
+            <div class="row-main"><span class="dot" style="background:${item.color}"></span><strong>${icons[item.cat] || ""} ${escapeHtml(item.cat)}</strong></div>
+            <div style="text-align:right"><strong>${money(item.amount)}</strong><div class="muted">${percent}%</div></div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderDetail() {
+      if (!currentDetail) return;
+      const item = state[currentDetail.collection]?.find((entry) => entry.id === currentDetail.id);
+      if (!item) return;
+      const detail = item.detail || {};
+      $("detailKind").textContent = collectionLabel(currentDetail.collection);
+      $("detailItemTitle").textContent = itemTitle(currentDetail.collection, item) || "詳細資料";
+      $("detailPageTitle").textContent = itemTitle(currentDetail.collection, item) || "詳細資料";
+      $("detailPageSub").textContent = `${collectionLabel(currentDetail.collection)} · Detail · Link · Image`;
+      $("detailSummary").value = detail.summary || "";
+      $("detailLink").value = detail.link || "";
+      $("detailImage").value = detail.image || "";
+      $("detailNotes").value = detail.notes || "";
+
+      const preview = [];
+      if (detail.summary) {
+        preview.push(`<div class="list-card" style="cursor:default;transform:none"><strong>補充說明</strong><div>${escapeHtml(detail.summary)}</div></div>`);
+      }
+      if (detail.link) {
+        preview.push(`<a class="detail-link" href="${escapeHtml(detail.link)}" target="_blank" rel="noopener">打開連結：${escapeHtml(detail.link)}</a>`);
+      }
+      if (detail.image) {
+        preview.push(`<img src="${escapeHtml(detail.image)}" alt="詳細圖片" onerror="this.style.display='none'">`);
+      }
+      if (detail.notes) {
+        preview.push(`<div class="list-card" style="cursor:default;transform:none"><strong>詳細備註</strong><div style="white-space:pre-line">${escapeHtml(detail.notes)}</div></div>`);
+      }
+      $("detailPreview").innerHTML = preview.length ? preview.join("") : `<div class="empty">儲存後，連結和圖片預覽會顯示在這裡。</div>`;
+    }
+
+    function addFromForm(formId, collection, mapper) {
+      $(formId).addEventListener("submit", (event) => {
+        event.preventDefault();
+        state[collection].push({ id: crypto.randomUUID(), ...mapper() });
+        event.currentTarget.reset();
+        if (formId === "hotelForm" || formId === "stopForm") {
+          event.currentTarget.querySelector("input[type='number']").value = 1;
+        }
+        saveState();
+        showToast("已新增");
+      });
+    }
+
+    function bindEvents() {
+      $("tripName").addEventListener("input", (event) => {
+        state.tripName = event.target.value || "我的旅行";
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        render();
+      });
+
+      ["jpyRate", "usdRate", "krwRate"].forEach((id) => {
+        $(id).addEventListener("input", () => {
+          state.rates.JPY = Number($("jpyRate").value || 0);
+          state.rates.USD = Number($("usdRate").value || 0);
+          state.rates.KRW = Number($("krwRate").value || 0);
+          saveState();
+        });
+      });
+
+      addFromForm("todoForm", "todos", () => ({ text: $("todoText").value.trim(), due: $("todoDue").value, done: false }));
+      addFromForm("flightForm", "flights", () => ({ no: $("flightNo").value.trim(), date: $("flightDate").value, from: $("flightFrom").value.trim(), to: $("flightTo").value.trim(), depart: $("flightDepart").value, arrive: $("flightArrive").value }));
+      addFromForm("hotelForm", "hotels", () => ({ day: Number($("hotelDay").value || 1), date: $("hotelDate").value, name: $("hotelName").value.trim(), phone: $("hotelPhone").value.trim(), address: $("hotelAddress").value.trim() }));
+      addFromForm("stopForm", "stops", () => ({ day: Number($("stopDay").value || 1), time: $("stopTime").value, place: $("stopPlace").value.trim(), type: $("stopType").value, note: $("stopNote").value.trim() }));
+      addFromForm("expenseForm", "expenses", () => ({ date: $("expenseDate").value, place: $("expensePlace").value.trim(), name: $("expenseName").value.trim(), category: $("expenseCategory").value, currency: $("expenseCurrency").value, amount: Number($("expenseAmount").value || 0) }));
+
+      document.body.addEventListener("click", (event) => {
+        const del = event.target.closest("[data-delete]");
+        if (del) {
+          event.stopPropagation();
+          const [collection, id] = del.dataset.delete.split(":");
+          state[collection] = state[collection].filter((item) => item.id !== id);
+          saveState();
+          showToast("已刪除");
+          return;
+        }
+        const filter = event.target.closest("[data-filter]");
+        if (filter) {
+          todoFilter = filter.dataset.filter;
+          document.querySelectorAll("[data-filter]").forEach((btn) => btn.classList.toggle("active", btn === filter));
+          renderTodos();
+          return;
+        }
+        const card = event.target.closest("[data-open-detail]");
+        if (card && !event.target.closest("button,input,label,a,select,textarea")) {
+          const [collection, id] = card.dataset.openDetail.split(":");
+          showDetail(collection, id);
+        }
+      });
+
+      document.body.addEventListener("change", (event) => {
+        if (event.target.matches("[data-check-todo]")) {
+          const item = state.todos.find((todo) => todo.id === event.target.dataset.checkTodo);
+          if (item) item.done = event.target.checked;
+          saveState();
+        }
+      });
+
+      document.querySelectorAll("[data-stat]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-stat]").forEach((item) => item.classList.remove("active"));
+          btn.classList.add("active");
+          showToast("目前統計全部花費");
+        });
+      });
+
+      $("seedBtn").addEventListener("click", () => {
+        state = structuredClone(sampleData);
+        saveState();
+        showToast("已載入北海道行程");
+      });
+      $("printBtn").addEventListener("click", () => window.print());
+      $("clearDoneBtn").addEventListener("click", () => {
+        state.todos = state.todos.filter((item) => !item.done);
+        saveState();
+        showToast("已清除完成待辦");
+      });
+      $("exportBtn").addEventListener("click", () => download("travel-planner-backup.json", JSON.stringify(state, null, 2), "application/json"));
+      $("exportCsvBtn").addEventListener("click", () => {
+        const header = ["日期", "地點", "項目", "類別", "幣別", "金額", "台幣換算"];
+        const rows = state.expenses.map((item) => [item.date, item.place, item.name, item.category, item.currency, item.amount, Math.round(convert(item.amount, item.currency))]);
+        const csv = [header, ...rows].map((row) => row.map((cell) => `"${String(cell ?? "").replaceAll('"', '""')}"`).join(",")).join("\n");
+        download("travel-expenses.csv", "\uFEFF" + csv, "text/csv;charset=utf-8");
+      });
+      $("importFile").addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        try {
+          const imported = JSON.parse(await file.text());
+          state = { ...defaultState(), ...imported, rates: { ...defaultState().rates, ...(imported.rates || {}) } };
+          saveState();
+          showToast("匯入完成");
+        } catch {
+          showToast("匯入失敗，檔案格式不對");
+        }
+        event.target.value = "";
+      });
+      $("resetBtn").addEventListener("click", () => {
+        if (!confirm("確定要清空這個旅遊助手裡的資料嗎？")) return;
+        state = defaultState();
+        saveState();
+        showToast("已清空");
+      });
+      $("detailBackBtn").addEventListener("click", backFromDetail);
+      $("detailBottomBackBtn").addEventListener("click", backFromDetail);
+      $("detailForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!currentDetail) return;
+        const item = state[currentDetail.collection]?.find((entry) => entry.id === currentDetail.id);
+        if (!item) return;
+        item.detail = {
+          summary: $("detailSummary").value.trim(),
+          link: $("detailLink").value.trim(),
+          image: $("detailImage").value.trim(),
+          notes: $("detailNotes").value.trim()
+        };
+        saveState();
+        showToast("詳細資料已儲存");
+      });
+    }
+
+    function download(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast("已匯出");
+    }
+
+    bindEvents();
+    render();
+  </script>
+</body>
+</html>
