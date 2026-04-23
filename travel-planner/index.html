@@ -520,9 +520,12 @@
       border: 1px solid rgba(222,219,210,.75);
     }
     .source-image-wrap {
-      position: relative;
       display: grid;
       place-items: center;
+    }
+    .source-image-action {
+      display: flex;
+      justify-content: center;
     }
     .source-image {
       width: 100%;
@@ -531,17 +534,52 @@
       border: 1px solid var(--line);
       background: white;
     }
+    .source-description {
+      display: grid;
+      gap: 12px;
+      padding-top: 2px;
+      line-height: 1.9;
+      font-weight: 700;
+    }
+    .source-description p, .source-description pre {
+      margin: 0;
+    }
+    .source-itinerary-text {
+      padding: 18px;
+      overflow-x: auto;
+      color: var(--ink);
+      background: #f7f4ed;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font-family: "PingFang TC", "Noto Sans TC", "Hiragino Sans", system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+    .source-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .source-highlight {
+      min-width: 0;
+      padding: 4px 0;
+    }
+    .source-highlight strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--green-dark);
+    }
     .open-original-center {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      min-height: 58px;
-      padding: 0 28px;
+      min-height: 48px;
+      padding: 0 24px;
       color: white;
       background: rgba(31, 102, 89, .94);
       border: 1px solid rgba(255,255,255,.55);
-      box-shadow: 0 14px 36px rgba(0,0,0,.24);
+      box-shadow: 0 8px 22px rgba(31,102,89,.20);
       backdrop-filter: blur(6px);
     }
     .detail-title {
@@ -567,6 +605,86 @@
       color: var(--green-dark);
       font-weight: 900;
       overflow-wrap: anywhere;
+    }
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .day-card {
+      position: relative;
+      min-height: 260px;
+      padding: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background-image:
+        linear-gradient(180deg, rgba(255, 253, 248, .12), rgba(255, 253, 248, .48) 50%, rgba(255, 253, 248, .86) 100%),
+        url("2026_北海道家族旅行/1150124北海道自由行-圖.jpg");
+      background-size: 360% auto;
+      background-position: var(--day-pos, 50% 50%);
+      background-repeat: no-repeat;
+      border: 1px solid rgba(222,219,210,.86);
+      box-shadow: 0 8px 20px rgba(34,38,31,.07);
+      text-align: left;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .day-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(40, 122, 107, .35);
+    }
+    .day-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255, 253, 248, .88), rgba(255, 253, 248, .50) 58%, rgba(255, 253, 248, .18)),
+        linear-gradient(180deg, rgba(22, 24, 29, .05), transparent 34%);
+      pointer-events: none;
+    }
+    .day-card-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      align-content: end;
+      min-height: 260px;
+      padding: 16px;
+    }
+    .day-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .day-card-title {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+    .day-card-title strong {
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.2;
+      text-shadow: 0 1px 0 rgba(255,255,255,.88), 0 8px 18px rgba(255,253,248,.66);
+    }
+    .day-card-summary {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+    .day-card-route {
+      color: var(--ink);
+      overflow-wrap: anywhere;
+      text-shadow: 0 1px 0 rgba(255,255,255,.82);
+    }
+    .day-page-head {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
     }
     .footer {
       padding: 44px 24px 56px;
@@ -606,7 +724,7 @@
       body { background: white; }
     }
     @media (max-width: 780px) {
-      .dashboard, .nav-grid, .form-grid, .chart-wrap { grid-template-columns: 1fr; }
+      .dashboard, .nav-grid, .form-grid, .chart-wrap, .source-highlights, .day-grid { grid-template-columns: 1fr; }
       .nav-btn { min-height: 142px; }
       .module-head, .row, .top-actions { align-items: stretch; flex-direction: column; }
       .tabs, .segment { width: 100%; grid-auto-columns: 1fr; }
@@ -698,9 +816,130 @@
         <div>
           <h2>1150124北海道自由行-圖</h2>
         </div>
+        <div class="source-image-action">
+          <a class="pill-btn open-original-center" href="2026_北海道家族旅行/1150124北海道自由行-圖.jpg" target="_blank" rel="noopener">打開原圖</a>
+        </div>
         <div class="source-image-wrap">
           <img class="source-image" src="2026_北海道家族旅行/1150124北海道自由行-圖.jpg" alt="1150124北海道自由行圖">
-          <a class="pill-btn open-original-center" href="2026_北海道家族旅行/1150124北海道自由行-圖.jpg" target="_blank" rel="noopener">打開原圖</a>
+        </div>
+        <div class="source-description">
+          <pre class="source-itinerary-text">2026 冬 北海道漫遊11日-行程說明
+
+📅 Day 1：1/24 (六) 抵達/登別
+🚗 交通： 機場租車自駕
+🏨 住宿： 第一瀧本館 (溫泉飯店)
+    •12:00 ✈️ 抵達新千歲
+    •13:30 📄 辦理租車
+    •15:00 👹 登別地獄谷 (日景+夜景)
+    •17:30 🏨 飯店 Check-in
+    •18:00 🍜 登別溫泉街散策、溫泉市場晚餐
+    •19:00 ♨️ 享受飯店日歸溫泉
+📝 備註： 入境+租車若延遲，地獄谷可視情況改明日。
+
+📅 Day 2：1/25 (日) 洞爺湖/登別
+🚗 交通： 自駕 
+🏨 住宿： 第一瀧本館 (溫泉飯店)
+    •09:00 🚡 有珠山纜車/洞爺湖
+    •10:00 🍰 筒倉展望台
+    •11:00 🍔 望羊蹄漢堡排套餐
+    •12:30 🥷 登別伊達時代村 (忍者秀/武士秀)
+    •18:30 🍱 溫泉街散策、溫泉市場晚餐
+    •19:00 ♨️ 享受飯店日歸溫泉
+📝 備註： 若天氣不好就取消洞爺湖。
+
+📅 Day 3：1/26 (一) 小樽浪漫遊
+🚗 交通： 自駕
+🏨 住宿： Hotel Nord Otaru
+    •09:00 🚙 前往小樽堺町通
+    •12:00 🍗 午餐：万次郎
+    •13:00 🚶 北一硝子館、音樂盒堂
+    •14:00 🍦 甜點巡禮 (北菓樓/六花亭/LeTao)
+    •15:00 🏨 飯店 Check-in & 停車
+    •15:30 ✨ 小樽運河散策 (等待點燈)
+    •18:00 🍗 晚餐：若鶏時代 或 出拔小路
+    •19:30 🌃 天狗山夜景 (視天氣前往)
+📝 備註： 留肚子吃甜點。
+
+📅 Day 4：1/27 (二) 前往富良野
+🚗 交通： 自駕 (山路小心)
+🏨 住宿： 富良野高地酒店 (溫泉)
+    •09:00 ✨ 小樽運河散策
+    •12:00 🚙 芦別休息站 (含多湯拉麵)
+    •12:30 🪆 北海道天徳大観音
+    •15:00 🏨 飯店 Check-in
+    •16:30 🧚 森林精靈露台 (點燈超美)
+    •18:20 ♨️ 飯店晚餐 & 溫泉
+📝 備註： 移動距離較長，注意雪地行車安全 。
+
+📅 Day 5：1/28 (三) 全日滑雪
+🚗 交通： 當地移動
+🏨 住宿： 富良野高地酒店 (溫泉)
+    •09:00 🏂 富良野滑雪場 (滑好滑滿)
+    •16:30 🧚 森林精靈露台 (若昨天沒去)
+    •18:20 ♨️ 飯店晚餐 & 舒緩肌肉
+📝 備註： 享受粉雪的一天 。
+
+📅 Day 6：1/29 (四) 旭山動物園與層雲峽
+🚗 交通： 自駕
+🏨 住宿： 層雲峽朝陽度假酒店
+    •08:00 🚙 必須準時出發!
+    •09:00 🎄 美瑛聖誕樹
+    •09:30 ❄️ 白鬚瀑布
+    •10:30 🐧 旭山動物園 (11:00 企鵝散步)
+    •13:30 🍜 旭川拉麵村 (午餐)
+    •16:00 ❄️ 銀河/流星瀑布
+    •17:00 🍱 飯店 Check-in & 晚餐
+    •18:40 ⛄ 層雲峽冰瀑祭 (極寒體驗)
+📝 備註： 企鵝散步不等人的，務必掌握時間。
+
+📅 Day 7：1/30 (五) 返回札幌
+🚗 交通： 自駕 ➡️ 還車
+🏨 住宿： 札幌王子大飯店
+    •09:00 🚙 出發札幌 (先至飯店寄行李)
+    •13:00 ⛽ 加油&爸爸還車/其他人逛地下街
+    •14:00 🗼 電視塔、大通公園、計時台
+    •17:00 🏨 飯店 Check-in
+    •18:00 🍜 晚餐：増田烏龍麵
+📝 備註： 還車後就是市區行程。
+
+📅 Day 8：1/31 (六) 札幌市區巡禮
+🚇 交通： 地鐵
+🏨 住宿： 札幌王子大飯店
+    •09:00 🐟 中央批發市場 (早餐/早午餐)
+    •11:00 🍪 白色戀人公園
+    •12:00 🍛 午餐：円山 Picante 湯咖哩
+    •13:00 ⛩️ 北海道神宮 (判官餅)
+    •15:30 🍰 六花亭 圓山店 (下午茶)
+    •17:00 🛍️ 狸小路商店街 (晚餐+逛街)
+📝 備註： 湯咖哩名店可能排隊，建議提早到。
+
+📅 Day 9：2/1 (日) 破冰之旅
+🚇 交通： 遊覽車
+🏨 住宿： 札幌王子大飯店
+    •07:00 🚌 全日空皇冠假日酒店搭車
+    •11:30 ❄️ 鄂霍次克塔
+    •12:30 🚢 破冰船「GARINKO GO Ⅲ・IMERU」
+    •19:00 🛍️ 薄野商圈 & 晚餐(成吉思汗烤肉)
+📝 備註： 破冰之旅要穿暖一點。
+
+📅 Day 10：2/2 (一) 札幌最後採購
+🚇 交通： 地鐵
+🏨 住宿： 札幌王子大飯店
+    •10:00 🗿 頭大佛殿、モアイ像
+    •12:00 🍛 地下街午餐
+    •13:30 🌳 大通公園散策-看雪祭
+    •15:00 🛍️ 札幌地下街 (最後衝刺!)
+    •18:00 🍜 晚餐：札幌車站周邊
+📝 備註： 檢查伴手禮是否買齊。
+
+📅 Day 11：2/3 (二) 平安返家
+🚃 交通： JR 機場快線
+🏠 目的地： 溫暖的家
+    •08:00 📍 飯店 Check-out，前往機場
+    •09:30 🎁 新千歲機場 (逛街/補貨/拉麵道場)
+    •14:00 ✈️ 起飛
+    •18:00 🛬 抵達桃園
+📝 備註： 國內線航廈比較好逛，記得預留時間。</pre>
         </div>
       </section>
       <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
@@ -798,9 +1037,31 @@
           <div class="field full"><label for="stopNote">備註</label><textarea id="stopNote" placeholder="例：想拍照、要先查營業時間、可能下雪備案"></textarea></div>
           <div class="field full"><button class="primary-btn" type="submit">＋ 新增行程</button></div>
         </form>
-        <div class="list" id="stopList"></div>
+        <div class="day-grid" id="dayList"></div>
       </section>
       <div class="bottom-back"><button class="back-btn" onclick="showHome()" type="button">← 返回首頁</button></div>
+    </div>
+  </div>
+
+  <div id="view-day" class="view">
+    <div class="section-body">
+      <div class="section-banner">
+        <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?auto=format&fit=crop&w=1200&q=80" alt="">
+        <div class="section-banner-text"><h2 id="dayPageTitle">Day 1</h2><p id="dayPageSub">Schedule · Daily Plan</p></div>
+      </div>
+      <div class="top-actions">
+        <button class="back-btn" onclick="showSection('itinerary')" type="button">← 返回景點行程</button>
+        <button class="pill-btn" id="addStopToDayBtn" type="button">＋ 新增到這一天</button>
+      </div>
+      <section class="module">
+        <div class="day-page-head">
+          <span class="badge" id="dayStopCount">0 個行程</span>
+          <h2 id="dayModuleTitle">Day 1 行程</h2>
+          <p class="subtle" id="dayModuleSummary">這一天的景點、交通、餐飲會集中在這裡。</p>
+        </div>
+        <div class="list" id="dayStopList"></div>
+      </section>
+      <div class="bottom-back"><button class="back-btn" onclick="showSection('itinerary')" type="button">← 返回景點行程</button></div>
     </div>
   </div>
 
@@ -1033,36 +1294,62 @@
     let todoFilter = "all";
     let currentDetail = null;
     let previousDetailView = "home";
+    let currentDay = 1;
     const $ = (id) => document.getElementById(id);
 
-    function showSection(name) {
+    function activeViewName() {
+      const active = document.querySelector(".view.active");
+      return active ? active.id.replace("view-", "") : "home";
+    }
+
+    function pushRoute(route, replace = false) {
+      const method = replace ? "replaceState" : "pushState";
+      history[method](route, "");
+    }
+
+    function activateView(name, options = {}) {
       document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
       $("view-" + name).classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: options.smooth === false ? "auto" : "smooth" });
       render();
     }
 
-    function showHome() {
-      document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
-      $("view-home").classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      render();
+    function showSection(name, options = {}) {
+      currentDetail = null;
+      if (options.push !== false) pushRoute({ view: name });
+      activateView(name, options);
     }
 
-    function showDetail(collection, id) {
+    function showHome(options = {}) {
+      currentDetail = null;
+      if (options.push !== false) pushRoute({ view: "home" });
+      activateView("home", options);
+    }
+
+    function showDetail(collection, id, options = {}) {
       const item = state[collection]?.find((entry) => entry.id === id);
       if (!item) return;
-      const active = document.querySelector(".view.active");
-      previousDetailView = active ? active.id.replace("view-", "") : "home";
+      previousDetailView = options.previousDetailView || activeViewName();
       currentDetail = { collection, id };
-      document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
-      $("view-detail").classList.add("active");
-      renderDetail();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (options.push !== false) pushRoute({ view: "detail", collection, id, previousDetailView });
+      activateView("detail", options);
     }
 
     function backFromDetail() {
-      showSection(previousDetailView || "home");
+      history.back();
+    }
+
+    function restoreRoute(route) {
+      const next = route?.view || "home";
+      if (next === "detail") {
+        showDetail(route.collection, route.id, { push: false, previousDetailView: route.previousDetailView || "home", smooth: false });
+        return;
+      }
+      if (next === "day") {
+        showDay(route.day || 1, { push: false, smooth: false });
+        return;
+      }
+      showSection(next, { push: false, smooth: false });
     }
 
     function defaultState() {
@@ -1152,6 +1439,7 @@
       renderFlights();
       renderHotels();
       renderStops();
+      renderDayPage();
       renderExpenses();
       renderStats();
       renderDetail();
@@ -1187,6 +1475,62 @@
       if (detail.link) flags.push("有連結");
       if (detail.image) flags.push("有圖片");
       return flags.length ? `<div class="card-flags">${flags.map((flag) => `<span>＋ ${escapeHtml(flag)}</span>`).join("")}</div>` : `<div class="card-flags"><span>點開補資料、連結、圖片</span></div>`;
+    }
+
+    function sortedStops() {
+      return [...state.stops].sort((a, b) => Number(a.day) - Number(b.day) || (a.time || "").localeCompare(b.time || ""));
+    }
+
+    function stopsForDay(day) {
+      return sortedStops().filter((item) => Number(item.day) === Number(day));
+    }
+
+    function hotelsForDay(day) {
+      return [...state.hotels].filter((item) => Number(item.day) === Number(day)).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+    }
+
+    function dayTitle(day, items = stopsForDay(day)) {
+      const firstSight = items.find((item) => item.type === "景點") || items[0];
+      const lastSight = [...items].reverse().find((item) => item.type === "景點") || items[items.length - 1];
+      if (!firstSight) return `Day ${day}`;
+      if (lastSight && lastSight.place !== firstSight.place) return `${firstSight.place} / ${lastSight.place}`;
+      return firstSight.place;
+    }
+
+    function dayRouteText(items) {
+      const route = items.filter((item) => item.type !== "交通").slice(0, 4).map((item) => item.place);
+      if (!route.length) return "這一天還沒有排入景點。";
+      return route.join(" → ");
+    }
+
+    function dayImagePosition(day) {
+      return {
+        1: "0% 18%",
+        2: "20% 18%",
+        3: "40% 18%",
+        4: "60% 18%",
+        5: "80% 18%",
+        6: "100% 18%",
+        7: "0% 86%",
+        8: "25% 86%",
+        9: "50% 86%",
+        10: "75% 86%",
+        11: "100% 86%"
+      }[Number(day)] || "50% 50%";
+    }
+
+    function stopCard(item) {
+      return `
+        <div class="list-card" data-open-detail="stops:${item.id}">
+          <div class="row">
+            <div class="row-main"><span>${icons[item.type] || "📍"}</span><strong>${escapeHtml(item.time || "時間未定")} · ${escapeHtml(item.place)}</strong></div>
+            <button class="tiny" data-delete="stops:${item.id}" type="button">刪除</button>
+          </div>
+          <div class="muted">Day ${escapeHtml(item.day)} · ${escapeHtml(item.type)}</div>
+          ${item.note ? `<div>${escapeHtml(item.note)}</div>` : ""}
+          ${detailFlags(item)}
+        </div>
+      `;
     }
 
     function renderTodos() {
@@ -1237,17 +1581,53 @@
     }
 
     function renderStops() {
-      $("stopList").innerHTML = state.stops.length ? [...state.stops].sort((a, b) => Number(a.day) - Number(b.day) || (a.time || "").localeCompare(b.time || "")).map((item) => `
-        <div class="list-card" data-open-detail="stops:${item.id}">
-          <div class="row">
-            <div class="row-main"><span>${icons[item.type] || "📍"}</span><strong>Day ${escapeHtml(item.day)} · ${escapeHtml(item.place)}</strong></div>
-            <button class="tiny" data-delete="stops:${item.id}" type="button">刪除</button>
-          </div>
-          <div class="muted">${escapeHtml(item.time || "時間未定")} · ${escapeHtml(item.type)}</div>
-          ${item.note ? `<div>${escapeHtml(item.note)}</div>` : ""}
-          ${detailFlags(item)}
-        </div>
-      `).join("") : cardEmpty("還沒有行程景點。");
+      const days = Math.max(tripDays(), ...state.stops.map((item) => Number(item.day || 0)), 0);
+      $("dayList").innerHTML = days ? Array.from({ length: days }, (_, index) => {
+        const day = index + 1;
+        const stops = stopsForDay(day);
+        const hotels = hotelsForDay(day);
+        const firstTime = stops[0]?.time || "時間未定";
+        const hotelText = hotels.length ? hotels.map((hotel) => hotel.name).join(" / ") : "住宿未設定";
+        return `
+          <button class="day-card" data-open-day="${day}" type="button" style="--day-pos:${dayImagePosition(day)}">
+            <div class="day-card-content">
+              <div class="day-card-top">
+                <div class="day-card-title">
+                  <span class="badge">Day ${day}</span>
+                  <strong>${escapeHtml(dayTitle(day, stops))}</strong>
+                </div>
+                <span>→</span>
+              </div>
+              <div class="day-card-summary">
+                <div class="day-card-route">${escapeHtml(dayRouteText(stops))}</div>
+                <div>${escapeHtml(firstTime)} 開始 · ${stops.length} 個行程</div>
+                <div>住宿：${escapeHtml(hotelText)}</div>
+              </div>
+            </div>
+          </button>
+        `;
+      }).join("") : cardEmpty("還沒有行程景點。");
+    }
+
+    function showDay(day, options = {}) {
+      currentDay = Math.max(1, Number(day) || 1);
+      currentDetail = null;
+      if (options.push !== false) pushRoute({ view: "day", day: currentDay });
+      activateView("day", options);
+    }
+
+    function renderDayPage() {
+      const day = currentDay || 1;
+      const stops = stopsForDay(day);
+      const hotels = hotelsForDay(day);
+      const title = `Day ${day}`;
+      const subtitle = dayTitle(day, stops);
+      $("dayPageTitle").textContent = title;
+      $("dayPageSub").textContent = subtitle === title ? "Schedule · Daily Plan" : subtitle;
+      $("dayModuleTitle").textContent = `${title} · ${subtitle}`;
+      $("dayStopCount").textContent = `${stops.length} 個行程`;
+      $("dayModuleSummary").textContent = hotels.length ? `住宿：${hotels.map((hotel) => hotel.name).join(" / ")}` : "這一天的景點、交通、餐飲會集中在這裡。";
+      $("dayStopList").innerHTML = stops.length ? stops.map(stopCard).join("") : cardEmpty("這一天還沒有行程。可以回景點行程頁新增，或點上方按鈕直接帶入 Day。");
     }
 
     function renderExpenses() {
@@ -1377,6 +1757,11 @@
           renderTodos();
           return;
         }
+        const dayCard = event.target.closest("[data-open-day]");
+        if (dayCard) {
+          showDay(dayCard.dataset.openDay);
+          return;
+        }
         const card = event.target.closest("[data-open-detail]");
         if (card && !event.target.closest("button,input,label,a,select,textarea")) {
           const [collection, id] = card.dataset.openDetail.split(":");
@@ -1439,6 +1824,14 @@
       });
       $("detailBackBtn").addEventListener("click", backFromDetail);
       $("detailBottomBackBtn").addEventListener("click", backFromDetail);
+      $("addStopToDayBtn").addEventListener("click", () => {
+        showSection("itinerary");
+        $("stopDay").value = currentDay || 1;
+        $("stopPlace").focus();
+      });
+      window.addEventListener("popstate", (event) => {
+        restoreRoute(event.state || { view: "home" });
+      });
       $("detailForm").addEventListener("submit", (event) => {
         event.preventDefault();
         if (!currentDetail) return;
@@ -1466,6 +1859,7 @@
       showToast("已匯出");
     }
 
+    pushRoute({ view: "home" }, true);
     bindEvents();
     render();
   </script>
