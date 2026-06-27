@@ -226,6 +226,32 @@
       font-size: 15px;
     }
 
+    .summary.flight-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .flight-ticket {
+      display: block;
+      width: 100%;
+      margin-top: auto;
+      border: 1px solid rgba(34,33,31,0.12);
+      border-radius: 8px;
+      background: #f4f1ea;
+      box-shadow: 0 8px 18px rgba(43, 52, 45, 0.08);
+    }
+
+    .detail-ticket {
+      display: block;
+      width: 100%;
+      margin-top: 18px;
+      border: 1px solid rgba(34,33,31,0.12);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(18,40,43,0.12);
+    }
+
     .route-strip {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -339,69 +365,140 @@
       font-size: 14px;
     }
 
-    .visual-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      gap: 16px;
-    }
-
-    .visual-tile {
+    .visual-cinema {
       position: relative;
-      min-height: 310px;
+      min-height: 640px;
       overflow: hidden;
       border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.72);
       background: #203f43;
-      box-shadow: 0 14px 34px rgba(43, 52, 45, 0.14);
+      box-shadow:
+        0 26px 56px rgba(31, 42, 36, 0.22),
+        inset 0 0 0 1px rgba(255,255,255,0.24),
+        inset 0 -8px 0 rgba(0,0,0,0.2);
     }
 
-    .visual-tile.small {
-      min-height: 230px;
+    .visual-cinema::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.20), transparent 18%),
+        linear-gradient(90deg, rgba(0,0,0,0.46), rgba(0,0,0,0.08) 45%, rgba(0,0,0,0.4));
+      pointer-events: none;
     }
 
-    .visual-stack {
-      display: grid;
-      gap: 16px;
+    .visual-cinema::after {
+      content: "";
+      position: absolute;
+      inset: auto 18px 18px;
+      z-index: 5;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.92), rgba(226,161,44,0.9));
+      transform-origin: left;
+      animation: visualProgress 24s linear infinite;
     }
 
-    .visual-tile img {
+    .visual-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      animation: visualFade 24s ease-in-out infinite;
+    }
+
+    .visual-slide:nth-child(2) { animation-delay: 6s; }
+    .visual-slide:nth-child(3) { animation-delay: 12s; }
+    .visual-slide:nth-child(4) { animation-delay: 18s; }
+
+    .visual-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       position: absolute;
       inset: 0;
-      transition: transform 0.5s ease;
-    }
-
-    .visual-tile:hover img {
       transform: scale(1.04);
+      animation: visualDrift 24s ease-in-out infinite;
     }
 
-    .visual-tile::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.62));
-    }
+    .visual-slide:nth-child(2) img { animation-delay: 6s; }
+    .visual-slide:nth-child(3) img { animation-delay: 12s; }
+    .visual-slide:nth-child(4) img { animation-delay: 18s; }
 
     .visual-caption {
       position: absolute;
-      z-index: 1;
-      left: 22px;
-      right: 22px;
-      bottom: 18px;
+      z-index: 4;
+      left: clamp(22px, 5vw, 58px);
+      right: clamp(22px, 6vw, 80px);
+      bottom: clamp(42px, 8vw, 86px);
+      max-width: 650px;
       color: #fff;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.34);
     }
 
     .visual-caption b {
       display: block;
-      font-size: clamp(22px, 3vw, 34px);
-      line-height: 1.2;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 1.12;
     }
 
     .visual-caption span {
-      color: rgba(255,255,255,0.82);
+      display: block;
+      max-width: 560px;
+      color: rgba(255,255,255,0.88);
+      font-size: clamp(18px, 2vw, 26px);
       font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .visual-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: rgba(255,255,255,0.82);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .visual-kicker::before {
+      content: "";
+      width: 36px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--citrus);
+    }
+
+    @keyframes visualFade {
+      0%, 24% { opacity: 1; }
+      30%, 100% { opacity: 0; }
+    }
+
+    @keyframes visualDrift {
+      0% { transform: scale(1.04) translateX(0); }
+      25% { transform: scale(1.1) translateX(-1.5%); }
+      30%, 100% { transform: scale(1.1) translateX(-1.5%); }
+    }
+
+    @keyframes visualProgress {
+      0% { transform: scaleX(0); }
+      100% { transform: scaleX(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .visual-slide,
+      .visual-slide img,
+      .visual-cinema::after {
+        animation: none;
+      }
+
+      .visual-slide:first-child {
+        opacity: 1;
+      }
     }
 
     .day-grid {
@@ -585,18 +682,9 @@
 
     .focus-block {
       display: grid;
-      grid-template-columns: 72px 1fr;
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: start;
-    }
-
-    .focus-num {
-      color: rgba(255,255,255,0.84);
-      font-size: clamp(34px, 5vw, 54px);
-      font-weight: 900;
-      line-height: 1;
-      text-align: right;
-      padding-top: 12px;
     }
 
     .focus-panel {
@@ -909,10 +997,7 @@
       .summary-grid, .day-grid, .feature-grid, .keyword-grid, .risk-grid { grid-template-columns: 1fr 1fr; }
       .route-strip { grid-template-columns: 1fr; }
       .strategy-grid { grid-template-columns: 1fr; }
-      .visual-grid { grid-template-columns: 1fr; }
-      .visual-stack { grid-template-columns: 1fr 1fr; }
-      .focus-block { grid-template-columns: 1fr; }
-      .focus-num { text-align: left; padding-top: 0; }
+      .visual-cinema { min-height: 560px; }
       .focus-columns { grid-template-columns: 1fr; }
       .detail-content { grid-template-columns: 1fr; padding: 34px 18px 44px; }
       .section-head { align-items: start; flex-direction: column; }
@@ -944,9 +1029,10 @@
       }
       .summary-grid, .day-grid, .feature-grid, .keyword-grid, .risk-grid { grid-template-columns: 1fr; }
       .overview-row { grid-template-columns: 1fr; gap: 4px; }
-      .visual-stack { grid-template-columns: 1fr; }
-      .visual-tile,
-      .visual-tile.small { min-height: 240px; }
+      .visual-cinema { min-height: 430px; }
+      .visual-caption { bottom: 34px; }
+      .visual-caption b { font-size: clamp(28px, 9vw, 42px); }
+      .visual-caption span { font-size: 17px; }
       .focus-head { padding: 18px 16px 12px; }
       .focus-table {
         display: block;
@@ -1017,8 +1103,8 @@
           <p>住宿當成動線節點：北 → 西 → 南 → 東 → 北。7/13–7/17 自駕，7/18–7/20 回到市區用計程車與公車生活。</p>
         </div>
         <div class="summary-grid">
-          <div class="summary"><strong>去程航班</strong><span>7/12（日）TW690<br>13:45 高雄飛<br>17:00 抵達濟州</span></div>
-          <div class="summary"><strong>回程航班</strong><span>7/20（一）IT671<br>19:50 濟州飛<br>21:15 抵達高雄</span></div>
+          <div class="summary flight-summary"><strong>去程航班</strong><span>7/12（日）TW690<br>13:45 高雄飛<br>17:00 抵達濟州</span><img class="flight-ticket" src="assets/flight-outbound-tw690.png" alt="去程航班 TW690 高雄飛濟州訂位畫面" loading="lazy" /></div>
+          <div class="summary flight-summary"><strong>回程航班</strong><span>7/20（一）IT671<br>19:50 濟州飛<br>21:15 抵達高雄</span><img class="flight-ticket" src="assets/flight-return-it671.png" alt="回程航班 IT671 濟州飛高雄訂單畫面" loading="lazy" /></div>
           <div class="summary"><strong>租車時間</strong><span>7/13 09:00 取車<br>7/17 晚上還車<br>西部與南部用租車最順</span></div>
           <div class="summary"><strong>無車時間</strong><span>7/18 - 7/20<br>以濟州市區、咸德、月汀里、購物與咖啡為主</span></div>
         </div>
@@ -1046,50 +1132,43 @@
       </div>
     </section>
 
-    <section id="overview" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>每日行程主軸</h2>
-          <p>這張給同行家人快速看懂：每天一個重點，住宿區域跟著動線走。</p>
-        </div>
-        <div class="overview-table">
-          <div class="overview-row"><span>日期</span><span>主軸</span><span>住宿</span></div>
-          <div class="overview-row"><span>7/12</span><span>抵達、東門市場、濟州市區晚餐</span><span>濟州市區</span></div>
-          <div class="overview-row"><span>7/13</span><span>取車、西部海岸、Monsant、挾才日落</span><span>Hallim／挾才</span></div>
-          <div class="overview-row"><span>7/14</span><span>海豚公路、山房山、O'sulloc、西歸浦</span><span>西歸浦</span></div>
-          <div class="overview-row"><span>7/15</span><span>瀑布、偶來市場、南岸咖啡</span><span>西歸浦</span></div>
-          <div class="overview-row"><span>7/16</span><span>中文觀光區／花園／雨天備案</span><span>西歸浦</span></div>
-          <div class="overview-row"><span>7/17</span><span>牛島一日、還車、回濟州市區</span><span>濟州市區</span></div>
-          <div class="overview-row"><span>7/18</span><span>無車日：市區、彩虹海岸、購物</span><span>濟州市區</span></div>
-          <div class="overview-row"><span>7/19</span><span>無車日：咸德海灘＋海景咖啡</span><span>濟州市區</span></div>
-          <div class="overview-row"><span>7/20</span><span>伴手禮、悠閒退房、機場</span><span>返台</span></div>
-        </div>
-      </div>
-    </section>
-
     <section class="section">
       <div class="wrap">
         <div class="section-head">
           <h2>旅行畫面感</h2>
-          <p>把這趟旅行想成四個畫面：西部海岸自駕、山海茶田、牛島海色、最後回到濟州市區慢慢收尾。</p>
+          <p>像一段慢慢播放的旅行預告：海風、山影、島色與最後幾天的悠閒，都先在腦中亮起來。</p>
         </div>
-        <div class="visual-grid">
-          <div class="visual-tile">
+        <div class="visual-cinema" aria-label="濟州旅行畫面輪播">
+          <div class="visual-slide">
             <img src="assets/hero-jeju-family-drive.png" alt="濟州海岸自駕與家族旅行" loading="lazy" />
-            <div class="visual-caption"><b>西部海岸自駕</b><span>7/13 從濟州市區取車，沿著海岸線一路玩到 Hallim／挾才。</span></div>
+            <div class="visual-caption">
+              <div class="visual-kicker">WEST COAST</div>
+              <b>車窗打開，海風先抵達。</b>
+              <span>從濟州市區取車往西，沿著海岸線慢慢開；不是趕路，是讓心先進入假期。</span>
+            </div>
           </div>
-          <div class="visual-stack">
-            <div class="visual-tile small">
-              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/KOCIS%20Jeju%20Island%20%285982744003%29.jpg" alt="濟州山海與自然景觀" loading="lazy" />
-              <div class="visual-caption"><b>山房山與茶田</b><span>7/14 海豚公路、山房山、O'sulloc 往西歸浦推進。</span></div>
+          <div class="visual-slide">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/KOCIS%20Jeju%20Island%20%285982744003%29.jpg" alt="濟州山海與自然景觀" loading="lazy" />
+            <div class="visual-caption">
+              <div class="visual-kicker">MOUNTAIN TEA</div>
+              <b>山靠近海，茶香留在午後。</b>
+              <span>山房山、海豚公路、O'sulloc 茶田接在同一天，拍照、喝茶、看雲慢慢移動。</span>
             </div>
-            <div class="visual-tile small">
-              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Udo%20%28satellite%20image%29%20%28cropped%29.jpg" alt="牛島海岸與島嶼" loading="lazy" />
-              <div class="visual-caption"><b>牛島一日</b><span>7/17 早出門，花生冰淇淋、海岸環島，晚上回市區還車。</span></div>
+          </div>
+          <div class="visual-slide">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Udo%20%28satellite%20image%29%20%28cropped%29.jpg" alt="牛島海岸與島嶼" loading="lazy" />
+            <div class="visual-caption">
+              <div class="visual-kicker">UDO ISLAND</div>
+              <b>把一天交給藍色的小島。</b>
+              <span>早一點出門去牛島，吃花生冰淇淋、沿海環島，再把車還給城市的夜色。</span>
             </div>
-            <div class="visual-tile small">
-              <img src="assets/hamdeok-beach-cafe.png" alt="咸德海邊咖啡與濟州海色" loading="lazy" />
-              <div class="visual-caption"><b>咸德海景咖啡</b><span>7/19 無車日，海邊放空、咖啡、伴手禮慢慢收尾。</span></div>
+          </div>
+          <div class="visual-slide">
+            <img src="assets/hamdeok-beach-cafe.png" alt="咸德海邊咖啡與濟州海色" loading="lazy" />
+            <div class="visual-caption">
+              <div class="visual-kicker">SLOW ENDING</div>
+              <b>最後幾天，不急著告別。</b>
+              <span>回到市區生活，去咸德看海、喝咖啡、買伴手禮，讓旅行慢慢收尾。</span>
             </div>
           </div>
         </div>
@@ -1114,7 +1193,6 @@
         </div>
         <div class="focus-stack">
           <article class="focus-block">
-            <div class="focus-num">14</div>
             <div class="focus-panel strong">
               <div class="focus-head">
                 <h3>餐點清單：照這張吃，不容易踩雷</h3>
@@ -1138,7 +1216,6 @@
           </article>
 
           <article class="focus-block">
-            <div class="focus-num">15</div>
             <div class="focus-panel">
               <div class="focus-head">
                 <h3>住宿區域建議：不是只看便宜，是看隔天少開多少路</h3>
@@ -1154,7 +1231,6 @@
           </article>
 
           <article class="focus-block">
-            <div class="focus-num">16</div>
             <div class="focus-panel">
               <div class="focus-head">
                 <h3>出發前風險控管：這張要截圖</h3>
@@ -1179,6 +1255,27 @@
       <a href="https://en.wikipedia.org/wiki/Sinchang_Windmill_Coastal_Road">Sinchang Windmill Coastal Road</a>、
       <a href="https://en.wikipedia.org/wiki/Seogwipo_Maeil_Olle_Market">Seogwipo Maeil Olle Market</a>。
     </section>
+
+    <section id="overview" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>每日行程主軸</h2>
+          <p>這張給同行家人快速看懂：每天一個重點，住宿區域跟著動線走。</p>
+        </div>
+        <div class="overview-table">
+          <div class="overview-row"><span>日期</span><span>主軸</span><span>住宿</span></div>
+          <div class="overview-row"><span>7/12</span><span>抵達、東門市場、濟州市區晚餐</span><span>濟州市區</span></div>
+          <div class="overview-row"><span>7/13</span><span>取車、西部海岸、Monsant、挾才日落</span><span>Hallim／挾才</span></div>
+          <div class="overview-row"><span>7/14</span><span>海豚公路、山房山、O'sulloc、西歸浦</span><span>西歸浦</span></div>
+          <div class="overview-row"><span>7/15</span><span>瀑布、偶來市場、南岸咖啡</span><span>西歸浦</span></div>
+          <div class="overview-row"><span>7/16</span><span>中文觀光區／花園／雨天備案</span><span>西歸浦</span></div>
+          <div class="overview-row"><span>7/17</span><span>牛島一日、還車、回濟州市區</span><span>濟州市區</span></div>
+          <div class="overview-row"><span>7/18</span><span>無車日：市區、彩虹海岸、購物</span><span>濟州市區</span></div>
+          <div class="overview-row"><span>7/19</span><span>無車日：咸德海灘＋海景咖啡</span><span>濟州市區</span></div>
+          <div class="overview-row"><span>7/20</span><span>伴手禮、悠閒退房、機場</span><span>返台</span></div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <main id="detail" class="view detail-shell" aria-live="polite"></main>
@@ -1192,6 +1289,8 @@
       jungmunGarden: "assets/jungmun-garden-cliffs.png",
       rainbowCoast: "assets/jeju-rainbow-coast.png",
       departure: "assets/jeju-departure-packing.png",
+      flightOutbound: "assets/flight-outbound-tw690.png",
+      flightReturn: "assets/flight-return-it671.png",
       seongsan: "https://commons.wikimedia.org/wiki/Special:FilePath/Seongsan%20Ilchulbong%20from%20the%20air.jpg",
       sanbang: "https://commons.wikimedia.org/wiki/Special:FilePath/KOCIS%20Jeju%20Island%20%285982744003%29.jpg",
       jeju: "https://commons.wikimedia.org/wiki/Special:FilePath/Jeju%20Island.jpg",
@@ -1218,7 +1317,9 @@
         food: ["豬肉湯麵 고기국수", "黑豬肉 흑돼지", "東門市場小吃"],
         keywords: ["고기국수", "흑돼지", "동문시장", "탑동"],
         notes: ["第一晚不要租車、不要排遠景點。", "剛落地開陌生道路，風險報酬比太差。"],
-        risk: "確認隔天取車地點、證件、信用卡與國際駕照。"
+        risk: "確認隔天取車地點、證件、信用卡與國際駕照。",
+        ticket: image.flightOutbound,
+        ticketAlt: "去程航班 TW690 高雄飛濟州訂位畫面"
       },
       {
         id: "west",
@@ -1381,7 +1482,9 @@
         food: ["豬肉湯麵 고기국수", "烤魚 생선구이", "拌飯 비빔밥", "橘子點心"],
         keywords: ["고기국수", "생선구이", "비빔밥", "동문시장", "제주공항"],
         notes: ["最後一天 KPI：準時、行李完整、不要吵架。其他都不重要。", "建議 17:00 前到機場，保留退稅、行李與排隊時間。"],
-        risk: "最後一天不要安排遠點，避免交通與行李壓力。"
+        risk: "最後一天不要安排遠點，避免交通與行李壓力。",
+        ticket: image.flightReturn,
+        ticketAlt: "回程航班 IT671 濟州飛高雄訂單畫面"
       }
     ];
 
@@ -1453,6 +1556,7 @@
             <h3 style="margin-top:24px;">小提醒</h3>
             <ul class="note-list">${day.notes.map(item => `<li>${item}</li>`).join("")}</ul>
             <div class="risk-note">${day.risk}</div>
+            ${day.ticket ? `<img class="detail-ticket" src="${day.ticket}" alt="${day.ticketAlt}" loading="lazy" />` : ""}
           </aside>
         </section>
       `;
